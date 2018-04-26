@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+<link type="text/css" rel="stylesheet" href="../css/myBlog.css">
+</head>
+<body>
+	<!-- 头部 -->
+	<div id="header" class="header">
+		<div id="rightHeader" class="rightHeader">
+			<button id="signBtn" class="signBtn">登录</button>
+		</div>
+	</div>
+	<!-- 所有文章，列表 -->
+	<div id="contenter" class="contenter">
+		<table id="allArticleTable" class="allArticleTable">
+			<thead>
+				<tr class="cen">
+					<th>文章编号</th>
+					<th>文章标题</th>
+					<th>作者编号</th>
+				</tr>
+			</thead>
+			<tbody id="tbodydata">
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<!-- 底部 -->
+	<div id="footer" class="footer"></div>
+
+	<script>
+		//获取所有文章
+		
+		$(document).ready(
+				function loadArticle() {
+					$.ajax({
+						type : "GET",
+						url : "http://localhost:8080/allArticleList",
+						success : function(data) {
+							$.each(data, function(i, item) {
+								$("#tbodydata").append(
+										"<tr><td>" + item.articleID
+												+ "</td><td><a href='#'>"
+												+ item.articleName
+												+ "</a></td><td>" + item.userID
+												+ "</td></tr>");
+							});
+						}
+					});
+				});
+
+		//头部登录按钮
+		$("#signBtn").click(function() {
+			location.href = "/html/logins.html";
+		})
+	</script>
+
+</body>
+</html>

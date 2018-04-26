@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+<link type="text/css" rel="stylesheet" href="../css/myBlog.css">
+</head>
+<body>
+	<!-- 头部 -->
+	<div id="header" class="header">
+		<button style="width:50px;height:50px;display:none;" onclick="articleShow()" id="articleShow">返回主页列表</button>
+	</div>
+	
+	<!-- 内容部 -->
+	<div id="contenter" class="contenter">
+		<!-- 个人博客列表模块 -->
+		
+		<button id="writeBoke" class="writeBoke">写博客</button>
+		
+		<div id="allArticleModel">
+			<table id="allArticleTable" class="allArticleTable">
+				<thead>
+					<tr class="cen">
+						<th>文章编号</th>
+						<th>文章标题</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody id="tbodydata">
+				</tbody>
+			</table>
+		</div>
+		
+		<!-- 查看具体博客内容模块 -->
+		<div id="articleModel" style="display: none;">
+			<!-- 文章区 -->
+			<div id="article">
+				<div id="articleName">
+					<h1 id="title">题目:</h1>
+				</div>
+				<div id="articleTextDiv">
+					<textarea id="content" rows="20" cols="60" style="font-size: 15px;"></textarea>
+				</div>
+				<div id="articleOperate">
+					<p id="saveChangeArticleID" style="display: none;"></p>    <!-- 保存查看的博客ID -->
+					<button id="saveChangeArticle">保存</button>  <!-- 保存修改后的博客 -->
+				</div>
+			</div>
+			<hr>
+			<!-- 评论区 -->
+			<div id="articleComment">
+				<h1>评论区</h1>
+			</div>			
+		</div>
+		
+		<!-- 写博客模块 -->
+		<div id="writeAticle" style="display: none;">
+			<!-- 标题区 -->
+			<div>
+				<span style="font-size: 20px">标题：</span>
+				<textarea id="writeTitle" rows="3" cols="40" style="font-size: 5px;"></textarea>
+			</div>
+			<!-- 博客正文区 -->
+			<div>
+				<textarea id="writeContent" rows="20" cols="60"></textarea>
+			</div>
+			<div>
+				<button id="saveArticle">保存</button>  <!-- 保存新写的博客 -->
+			</div>
+		</div>
+		
+		<!-- 用来保存登录后的userID -->
+		<div style="display: none;">
+			<p id="saveUserID"></p>
+		</div>
+		
+		
+	</div>
+		
+	<!-- 足部 -->
+	<div id="footer" class="footer"></div>
+
+	<script>
+		$(document).ready(function loadArticle() {
+			$.ajax({
+				type : "GET",
+				url : "http://localhost:8080/sbArticleList",
+				success : function(data) {
+					$.each(data, function(i, item) {
+						$("#tbodydata").append("<tr><td>" + item.articleID + "</td><td><a onclick='articleHide(this)' href=''>"+ item.articleName+ "</a></td><td>" + "<input name='deleteBoke' type='button' value='删除' onclick='getTableContent(this)'>"+ "</td></tr>");
+					});
+				}
+			});
+			
+			$.ajax({
+				type:"GET",
+				url:"http://localhost:8080/searchUser",
+				success:function(data){
+					$("#saveUserID").append(data);
+				}
+			})
+		});
+		
+		//点击按钮删除博客
+		function getTableContent(node){
+			var tr1 = node.parentNode.parentNode;
+			//alert(tr1.rowIndex);  
+            //alert(tr1.cells[0].innerText);
+            var articleid = tr1.cells[0].innerText;
+            console.log(articleid);
+            //删除对应博客的评论
+            $.ajax({
+            	type:"GET",
+            	url:"http://localhost:8080/artComment",
+            	data:"articleid="+articleid,
+            	success:function(){
+            		console.log("删除对应评论成功");
+            	}
+            });
+            //删除博客
+            $.ajax({
+            	type:"GET",
+            	url:"http://localhost:8080/sbArticle",
+            	data:"articleid="+articleid,
+            	success : function() {
+					alert("删除成功");
+					location.href = "/html/homePage.html";
+				}
+            });
+		}
+		
+		//隐藏列表，显示文章区
+		function articleHide(node1){
+			var tr1 = node1.parentNode.parentNode;
+			//alert(tr1.rowIndex);  
+            //alert(tr1.cells[0].innerText);
+            var articleid = tr1.cells[0].innerText;
+			$("#allArticleModel").hide();		//具体每个代表着哪个模块下面有
+			$("#articleHide").hide();
+			$("#writeAticle").hide();
+			$("#articleModel").show();
+			$("#articleShow").show();
+			$("#writeBoke").show();	
+			$.ajax({
+				type:"GET",
+				url:"http://localhost:8080/article",
+				dataType:"json",
+				data:"articleid="+articleid,
+				success:function(data){
+					$("#title").append(data.articleName);
+					$("#content").append(data.articleContent);
+					$("#saveChangeArticleID").append(articleid);
+				}
+			});	
+		}
+		
+		//隐藏文章，返回列表
+		function articleShow(){
+			$("#allArticleModel").show();
+			$("#articleHide").show();
+			$("#articleModel").hide();
+			$("#articleShow").hide();
+			$("#writeAticle").hide();
+			$("#writeBoke").show();
+		}
+		
+		//跳转写博客页面
+		$("#writeBoke").click(function(){
+			$("#allArticleModel").hide(); //主页列表DIV
+			$("#articleHide").hide();	  //忘了干嘛的了，测试删了后好像没影响
+			$("#articleModel").hide();	  //查看博客模块
+			$("#articleShow").show();	  //返回主页list按钮
+			$("#writeAticle").show();	  //写博客DIV
+			$("#writeBoke").hide();       //写博客按钮
+		})
+		
+		//写博客模块
+		$("#saveArticle").click(function(){
+			var articlename = document.getElementById("writeTitle").value;
+			var articlecontent = document.getElementById("writeContent").value;
+			var userid = $("#saveUserID").html();
+			//console.log(userid);		
+			//console.log(articlename);
+			//console.log(articlecontent);
+		 	$.ajax({
+		 		type:"GET",
+				url:"http://localhost:8080/insertArt",
+				data:"articlename=" + articlename + "&articlecontent=" + articlecontent + "&userid=" + userid,
+				success:function(){
+					alert("添加成功");
+					location.href = "/html/homePage.html";
+				}
+			});  
+		});
+		
+		//更新博客模块
+		$("#saveChangeArticle").click(function(node2){
+			var articleid = $("#saveChangeArticleID").html();
+			//console.log(articleid);
+			var articlecontent = document.getElementById("content").value;
+			//alert(articlecontent);
+			$.ajax({
+				type:"GET",
+				url:"http://localhost:8080/updateArt",
+				data:"articleid=" + articleid + "&articlecontent=" + articlecontent,
+				success:function(){
+					alert("修改成功");
+					location.href = "/html/homePage.html";
+				}
+			}); 
+		}) 
+
+	 		
+	</script>
+
+</body>
+</html>

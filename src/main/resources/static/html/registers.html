@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link type="text/css" rel="stylesheet" href="../css/myBlog.css">
+<script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+	<div>
+		<!-- 头部 -->
+		<div id="header" class="header">
+			<div id="rightHeader" class="rightHeader">
+				<button id="signBtn" class="signBtn">登录</button>
+			</div>
+		</div>
+
+		<!-- 内容 -->
+		<div id="contenter" class="contenter">
+			<form id="loginForm" class="loginForm">
+				<label for="userpwd">密码：</label> <input type="password"
+					name="userpwd" id="userpwd"> <br> <br> <br>
+				<label for="username">昵称：</label> <input type="text" name="username"
+					id="username"> <br> <br> <br> <input
+					type="button" id="sub" value="提交">
+			</form>
+		</div>
+
+		<!-- 底部 -->
+		<div id="footer" class="footer"></div>
+
+	</div>
+
+	<script>
+		$("#sub").click(function() {
+			var username = $("#username").val();
+			var userpwd = $("#userpwd").val();
+			if (username == "" || userpwd == "") {
+				alert("用户名和密码不能为空");
+			} else {
+				$.ajax({
+					type : "GET",
+					url : "http://localhost:8080/register",
+					data : "userpwd=" + userpwd + "&username=" + username,
+					success : function() {
+						alert("注册成功");
+					}
+				})
+			}
+		});
+		
+		$("#signBtn").click(function(){
+			location.href="/html/logins.html";
+		})
+	</script>
+
+
+</body>
+</html>

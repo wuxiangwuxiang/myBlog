@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+<link type="text/css" rel="stylesheet" href="../css/myBlog.css">
+</head>
+<body>
+	<div id="header" class="header">
+		<div id="rightHeader" class="rightHeader">
+			<button id="return" class="signBtn">返回</button>
+		</div>
+	</div>
+
+	<div id="contenter" class="contenter">
+		<!-- 博客区 -->
+		<div>
+			<div>
+				<span style="font-size: 20px">标题：</span>
+				<textarea id="writeTitle" rows="3" cols="40" style="font-size: 5px;"></textarea>
+			</div>
+			<div>
+				<textarea id="writeContent" rows="20" cols="60"></textarea>
+			</div>
+			<div>
+				<button id="saveArticle">保存</button>
+			</div>
+		</div>
+		<hr>
+		<!-- 评论区 -->
+		<div>
+			<h1>评论区</h1>
+		</div>
+	</div>
+	<div id="footer" class="footer"></div>
+
+	<script>
+		//返回homePage按钮
+		$("#return").click(function() {
+			location.href = "/html/homePage.html";
+		});
+		
+		
+		
+		$("#saveArticle").click(function(){
+			var articlename = document.getElementById("writeTitle").value;
+			var articlecontent = document.getElementById("writeContent").value;
+			//console.log(articlename);
+			//console.log(articlecontent);
+			$.ajax({
+				type："GET",
+				url:"http://localhost:8080/insertArt",
+				data:
+			}); 
+		})
+	</script>
+
+</body>
+</html>
