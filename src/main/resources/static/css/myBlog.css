@@ -22,13 +22,16 @@
 }
 
 .contenter {
-	background-color: white;
+ 	background-image:url(../lib/backimg1.png);
+	background-repeat: no-repeat;
+	background-position:center; 
+	background-size:auto 100%;
+	background-attachment:fixed;
 	position: absolute;
 	top: 8%;
 	height: 84%;
 	width: 100%;
-	text-align: center;
-	background: rgba(100, 149, 237, 0.5);
+	text-align: center;	
 }
 
 .loginForm {
@@ -75,3 +78,8 @@ a {
 	text-decoration:none;
 }
 
+/* img{
+	height:100%;
+	width:auto;
+}
+ */

@@ -13,12 +13,12 @@
 
 		<!-- 内容 -->
 		<div id="contenter" class="contenter">
-			<form id="loginForm" class="loginForm">
+			<form id="loginForm" class="loginForm" action="/html/homePage.html">
 				<label for="userid">账号：</label> <input type="text" name="userid"
 					id="userid"> <br> <br> <br> <label
 					for="userpwd">密码：</label> <input type="password" name="userpwd"
 					id="userpwd"> <br> <br> <br> <input
-					type="button" id="sub" value="登录">&nbsp;&nbsp;<input type="button"
+					type="submit" id="sub" value="登录">&nbsp;&nbsp;<input type="button"
 					id="regis" value="注册">
 			</form>
 		</div>
@@ -29,7 +29,7 @@
 	</div>
 
 	<script>
-		$("#sub").click(function() {		
+		$("#sub").click(function() {
 			var userid = $("#userid").val();
 			var userpwd = $("#userpwd").val();	
 			if (userid == "" || userpwd == "") {
@@ -42,16 +42,17 @@
 					success:function(data){
 						console.log(data);
 						if("empty"==data){
-							
 						}else if("error"==data){
-							alert("账号或密码错误")
+							alert("账号或密码错误");
 						}else if("yes"==data){
 							location.href='/html/homePage.html';
 						}
 					}
-				});
+				})
 			}
 		});
+		
+		/* $('') */
 		
 		$("#regis").click(function(){
 			location.href="/html/registers.html";

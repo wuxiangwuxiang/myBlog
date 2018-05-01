@@ -88,9 +88,12 @@
 				url : "http://localhost:8080/sbArticleList",
 				success : function(data) {
 					$.each(data, function(i, item) {
-						$("#tbodydata").append("<tr><td>" + item.articleID + "</td><td><a onclick='articleHide(this)' href=''>"+ item.articleName+ "</a></td><td>" + "<input name='deleteBoke' type='button' value='删除' onclick='getTableContent(this)'>"+ "</td></tr>");
+						$("#tbodydata").append("<tr><td>" + item.articleID + "</td><td><a onclick='articleHide(this)' href='#'>" + item.articleName + "</a></td><td>" + "<input name='deleteBoke' type='button' value='删除' onclick='getTableContent(this)'>"+ "</td></tr>");
 					});
-				}
+				},
+				error:function(){
+					location.href = "/html/mainPage.html";
+				} 
 			});
 			
 			$.ajax({
@@ -99,7 +102,7 @@
 				success:function(data){
 					$("#saveUserID").append(data);
 				}
-			})
+			});
 		});
 		
 		//点击按钮删除博客
@@ -137,7 +140,6 @@
             //alert(tr1.cells[0].innerText);
             var articleid = tr1.cells[0].innerText;
 			$("#allArticleModel").hide();		//具体每个代表着哪个模块下面有
-			$("#articleHide").hide();
 			$("#writeAticle").hide();
 			$("#articleModel").show();
 			$("#articleShow").show();
@@ -157,8 +159,7 @@
 		
 		//隐藏文章，返回列表
 		function articleShow(){
-			$("#allArticleModel").show();
-			$("#articleHide").show();
+			$("#allArticleModel").show();			
 			$("#articleModel").hide();
 			$("#articleShow").hide();
 			$("#writeAticle").hide();
@@ -168,7 +169,6 @@
 		//跳转写博客页面
 		$("#writeBoke").click(function(){
 			$("#allArticleModel").hide(); //主页列表DIV
-			$("#articleHide").hide();	  //忘了干嘛的了，测试删了后好像没影响
 			$("#articleModel").hide();	  //查看博客模块
 			$("#articleShow").show();	  //返回主页list按钮
 			$("#writeAticle").show();	  //写博客DIV

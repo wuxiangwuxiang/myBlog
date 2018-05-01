@@ -7,6 +7,7 @@
 <link type="text/css" rel="stylesheet" href="../css/myBlog.css">
 </head>
 <body>
+
 	<!-- 头部 -->
 	<div id="header" class="header">
 		<div id="rightHeader" class="rightHeader">
@@ -15,6 +16,7 @@
 	</div>
 	<!-- 所有文章，列表 -->
 	<div id="contenter" class="contenter">
+		<!-- <img src="../lib/backimg.jpg"> -->
 		<table id="allArticleTable" class="allArticleTable">
 			<thead>
 				<tr class="cen">
@@ -32,13 +34,12 @@
 			</tbody>
 		</table>
 	</div>
-	
+
 	<!-- 底部 -->
 	<div id="footer" class="footer"></div>
 
 	<script>
 		//获取所有文章
-		
 		$(document).ready(
 				function loadArticle() {
 					$.ajax({
