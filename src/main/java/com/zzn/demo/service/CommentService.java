@@ -27,4 +27,14 @@ public class CommentService {
 		List<Comment> list = commentMapper.getArticleComment(articleID); 
 		return list;
 	}
+	
+	// 分页，查询pageSize条评论
+	public  List<Comment> fiveCommentList(Integer articleid, Integer page,Integer pagesize){
+		List<Comment> list = commentMapper.getFiveCommentList(articleid, page, pagesize);
+		return list;
+	}
+	// 分页，获取评论表总条数
+	public int commentTotalCount(Integer articleid) {
+		return commentMapper.getCommentTotalCount(articleid);
+	}
 }

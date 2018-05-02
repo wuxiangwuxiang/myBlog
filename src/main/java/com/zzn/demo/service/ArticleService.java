@@ -49,8 +49,8 @@ public class ArticleService {
 	}
 	
 	//分页，查询10条博客
-	public  List<Article> fiveArticleList(Integer page){
-		List<Article> list = articleMapper.getFiveArticleList(page);
+	public  List<Article> fiveArticleList(Integer page,Integer pageSize){
+		List<Article> list = articleMapper.getFiveArticleList(page,pageSize);
 		return list;
 	}
 	

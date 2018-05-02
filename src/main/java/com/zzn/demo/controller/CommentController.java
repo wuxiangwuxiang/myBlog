@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zzn.demo.pojo.Article;
 import com.zzn.demo.pojo.Comment;
 import com.zzn.demo.service.CommentService;
 
@@ -26,9 +27,23 @@ public class CommentController {
 
 	// 根据articleID查看博客的评论
 	@RequestMapping(value = "/searchArticleComment", method = RequestMethod.GET)
-	public List<Comment> searchArticleComment(@RequestParam(value = "articleid", required = false) Integer articleid ) {
-		List<Comment> list2 = commentService.searchArticleComment(articleid); 
+	public List<Comment> searchArticleComment(@RequestParam(value = "articleid", required = false) Integer articleid) {
+		List<Comment> list2 = commentService.searchArticleComment(articleid);
 		return list2;
+	}
+
+	// 分页，查询pageSize条评论
+	@RequestMapping(value = "/fiveCommentList", method = RequestMethod.GET)
+	public List<Comment> fiveArticleList(@RequestParam(value = "articleid") Integer articleid,
+			@RequestParam(value = "page") Integer page, @RequestParam(value = "pagesize") Integer pagesize) {
+		List<Comment> list = commentService.fiveCommentList(articleid, page, pagesize);
+		return list;
+	}
+
+	// 分页，获取博客表总条数
+	@RequestMapping(value = "/commentTotalCount", method = RequestMethod.GET)
+	public int commentTotalCount(@RequestParam(value = "articleid") Integer articleid) {
+		return commentService.commentTotalCount(articleid);
 	}
 
 }

@@ -39,9 +39,9 @@ public interface ArticleMapper {
 	@Update("UPDATE Article SET ArticleContent = #{articleContent} WHERE ArticleID = #{articleID}")
 	public int updateArticle(@Param("articleID") Integer ArticleID, @Param("articleContent") String ArticleContent);
 
-	// 分页，查询5条博客
-	@Select("select ArticleID ,ArticleName,ArticleContent ,UserID from Article order by ArticleID asc LIMIT #{page},5")
-	public List<Article> getFiveArticleList(@Param("page") Integer page);
+	// 分页，查询pageSize条博客
+	@Select("select ArticleID ,ArticleName,ArticleContent ,UserID from Article order by ArticleID asc LIMIT #{page},#{pageSize}")
+	public List<Article> getFiveArticleList(@Param("page") Integer page,@Param("pageSize") Integer pageSize);
 	
 	//分页，获取博客表总条数
 	@Select("select count(*) from Article")

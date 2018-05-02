@@ -51,6 +51,21 @@
 			<!-- 评论区 -->
 			<div id="articleComment">
 				<h1>评论区</h1>
+				<table id="artComment" class="artComment">
+					<thead>
+						<tr class="cen">
+							<th>评论编号</th>
+							<th>评论内容</th>
+							<th>评论用户id</th>
+						</tr>
+					</thead>
+					<tbody id="artCommenttbody">
+					</tbody>
+				</table>
+				<div>
+					<button id="lastCommentPage">上一页</button>
+					<button id="nextCommentPage">下一页</button>
+				</div>
 			</div>			
 		</div>
 		
@@ -82,7 +97,7 @@
 	<div id="footer" class="footer"></div>
 
 	<script>
-		$(document).ready(function loadArticle() {
+		$(document).ready(function() {
 			$.ajax({
 				type : "GET",
 				url : "http://localhost:8080/sbArticleList",
@@ -133,12 +148,19 @@
             });
 		}
 		
+		var page = 0;                 //第几条
+		var allCommentTotalCount = 0; //总博客的条数
+		var pageCount = 0;            //总博客的总页数
+		var nowPageCount = 1;         //总博客列表的当前页
+		var pagesize = 5;            //每页显示的数量
+		var articleid = 0;
+		
 		//隐藏列表，显示文章区
 		function articleHide(node1){
 			var tr1 = node1.parentNode.parentNode;
 			//alert(tr1.rowIndex);  
             //alert(tr1.cells[0].innerText);
-            var articleid = tr1.cells[0].innerText;
+            articleid = tr1.cells[0].innerText;
 			$("#allArticleModel").hide();		//具体每个代表着哪个模块下面有
 			$("#writeAticle").hide();
 			$("#articleModel").show();
@@ -154,8 +176,80 @@
 					$("#content").append(data.articleContent);
 					$("#saveChangeArticleID").append(articleid);
 				}
-			});	
+			});
+			
+			//获取评论页数
+			$.ajax({
+				type : "GET",
+				url : "http://localhost:8080/commentTotalCount",
+				data: "articleid=" + articleid,
+				success : function(data) {
+					allCommentTotalCount = data; //获取博客条数
+					pageCount = (allCommentTotalCount + 4) / pagesize //计算页数
+					//console.log(articleid);
+					//console.log(allCommentTotalCount);
+					//console.log(pageCount);
+				}
+			});
+					
+			//显示评论
+			fiveComment(page);
+			 /* $.ajax({
+				type:"GET",
+				url:"http://localhost:8080/searchArticleComment",
+				data:"articleid="+articleid,
+				success:function(data) {
+						$.each(data, function(i, item) {
+							$("#artCommenttbody").append("<tr><td>" + item.userID + "</td><td>" + item.commentID + "</td><td>"+item.commentContent+ "</td></tr>");
+						});
+				}
+			})  */
 		}
+		
+		//获取前5页评论的方法
+		function fiveComment(page) {
+			//console.log(pagesize);
+			$.ajax({
+				type : "GET",
+				url : "http://localhost:8080/fiveCommentList",
+				data : "articleid=" + articleid + "&page=" + page + "&pagesize=" + pagesize,
+				success : function(data) {
+					$("#artCommenttbody").html("");
+					$.each(data, function(i, item) {
+						$("#artCommenttbody").append("<tr><td>" + item.userID + "</td><td>" + item.commentID + "</td><td>"+item.commentContent+ "</td></tr>");
+					});
+				}
+			});
+		}
+		
+		
+		//点击翻页下一页评论
+		$("#nextCommentPage").click(function() {
+			if (nowPageCount < parseInt(pageCount)) {
+				nowPageCount++;
+				page = page + pagesize;
+			} else {
+				nowPageCount = 1;
+				page = 0;
+			}
+			//console.log(page);
+			//console.log(nowPageCount);
+			//console.log(pageSize);
+			fiveComment(page);
+		});
+		//点击翻页上一页评论
+		$("#lastCommentPage").click(function() {
+			if (nowPageCount > 1) {
+				nowPageCount--;
+				page = page - pagesize;
+			} else {
+				nowPageCount = parseInt(pageCount);
+				page = (nowPageCount - 1) * pagesize;
+			}
+			//console.log(page);
+			//console.log(nowPageCount);
+			fiveComment(page);
+		});
 		
 		//隐藏文章，返回列表
 		function articleShow(){
@@ -209,7 +303,7 @@
 					location.href = "/html/homePage.html";
 				}
 			}); 
-		}) 
+		})
 
 	 		
 	</script>

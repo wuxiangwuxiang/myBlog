@@ -22,7 +22,6 @@ public class ArticleController {
 	@RequestMapping(value = "/allArticleList", method = RequestMethod.GET)
 	public List<Article> allArticleLsit() {
 		List<Article> list = articleService.allArticleList();
-
 		return list;
 	}
 
@@ -67,8 +66,8 @@ public class ArticleController {
 
 	// 分页，查询10条博客
 	@RequestMapping(value = "/fiveAllArticleList", method = RequestMethod.GET)
-	public List<Article> fiveArticleList(@RequestParam(value = "page") Integer page) {
-		List<Article> list = articleService.fiveArticleList(page);
+	public List<Article> fiveArticleList(@RequestParam(value = "page") Integer page , @RequestParam(value = "pagesize") Integer pagesize) {
+		List<Article> list = articleService.fiveArticleList(page,pagesize);
 		return list;
 	}
 

@@ -33,10 +33,12 @@
 				</tr>
 			</tbody>
 		</table>
-		
+
 		<div>
 			<button id="lastArticlePage">上一页</button>
 			<button id="nextArticlePage">下一页</button>
+			<button id="tenPage">换为每页10条</button>
+			<button id="fivePage" style="display: none;">换回每页5条</button>
 		</div>
 	</div>
 
@@ -44,11 +46,12 @@
 	<div id="footer" class="footer"></div>
 
 	<script>
-		var page = 0;   //第几条
-		var allArticleTotalCount = 0;//总博客的条数
-		var pageCount = 0;
-		var nowPageCount = 1;
-		$(document).ready(function(){
+		var page = 0;                 //第几条
+		var allArticleTotalCount = 0; //总博客的条数
+		var pageCount = 0;            //总博客的总页数
+		var nowPageCount = 1;         //总博客列表的当前页
+		var pageSize = 5;            //每页显示的数量
+		$(document).ready(function() {
 			//获取所有文章
 			/* $.ajax({
 				type : "GET",
@@ -59,71 +62,92 @@
 					});
 				}
 			}); */
-			
+
 			//调用获取前5页的方法
 			fiveArticle(page);
 		});
-		
-		 //获取博客表页数
+
+		//获取博客表页数
 		$.ajax({
-			type: "GET",
-			url:"http://localhost:8080/artTotalCount",
-			success:function(data){
-				allArticleTotalCount = data;  //获取博客条数
-				pageCount = (allArticleTotalCount + 4)/5
+			type : "GET",
+			url : "http://localhost:8080/artTotalCount",
+			success : function(data) {
+				allArticleTotalCount = data; //获取博客条数
+				pageCount = (allArticleTotalCount + pagesize-1) / pageSize //计算页数
+				//console.log(pageCount);
+				//console.log(pageCount);
 			}
-		}); 
-		
+		});
+
 		//获取前5页博客的方法
-		function fiveArticle(page){
+		function fiveArticle(page) {
 			$.ajax({
-				type:"GET",
-				url:"http://localhost:8080/fiveAllArticleList",
-				data:"page="+page,
-				success:function(data){
+				type : "GET",
+				url : "http://localhost:8080/fiveAllArticleList",
+				data : "page=" + page + "&pagesize=" + pageSize,
+				success : function(data) {
 					$("#tbodydata").html("");
-					$.each(data,function(i,item){
-						$("#tbodydata").append("<tr><td>" + item.articleID+ "</td><td><a href='#'>"+ item.articleName+ "</a></td><td>" + item.userID+ "</td></tr>");
+					$.each(data, function(i, item) {
+						$("#tbodydata").append(
+								"<tr><td>" + item.articleID
+										+ "</td><td><a href='#'>"
+										+ item.articleName + "</a></td><td>"
+										+ item.userID + "</td></tr>");
 					})
 				}
 			});
 		}
-		
+
 		//点击翻下一页
-		$("#nextArticlePage").click(function(){
-			if(nowPageCount<parseInt(pageCount)){
+		$("#nextArticlePage").click(function() {
+			if (nowPageCount < parseInt(pageCount)) {
 				nowPageCount++;
-				page = page+5;
-			}else{
+				page = page + pageSize;
+			} else {
 				nowPageCount = 1;
 				page = 0;
 			}
 			//console.log(page);
 			//console.log(nowPageCount);
+			//console.log(pageSize);
 			fiveArticle(page);
 		});
-		
+
 		//点击翻上一页
-		$("#lastArticlePage").click(function(){
-			if(nowPageCount>1){
+		$("#lastArticlePage").click(function() {
+			if (nowPageCount > 1) {
 				nowPageCount--;
-				page = page-5;
-			}else{
+				page = page - pageSize;
+			} else {
 				nowPageCount = parseInt(pageCount);
-				page = (4-1)*5;
+				page = (nowPageCount - 1) * pageSize;
 			}
 			//console.log(page);
 			//console.log(nowPageCount);
 			fiveArticle(page);
-		})
+		});
 		
+		//点击变为每页显示10行
+		$("#tenPage").click(function(){
+			$("#fivePage").show();
+			$("#tenPage").hide();
+			pageSize = 10;
+			pageCount = (allArticleTotalCount + 4) / pageSize; //重新计算页数
+			fiveArticle(page);
+		});
+		//点击换回每页5行
+		$("#fivePage").click(function(){
+			$("#fivePage").hide();
+			$("#tenPage").show();
+			pageSize = 5;
+			pageCount = (allArticleTotalCount + 4) / pageSize; //重新计算页数
+			fiveArticle(page);
+		});
+
 		//头部登录按钮
 		$("#signBtn").click(function() {
 			location.href = "/html/logins.html";
 		});
-		
-		
-		
 	</script>
 
 </body>
