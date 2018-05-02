@@ -33,35 +33,97 @@
 				</tr>
 			</tbody>
 		</table>
+		
+		<div>
+			<button id="lastArticlePage">上一页</button>
+			<button id="nextArticlePage">下一页</button>
+		</div>
 	</div>
 
 	<!-- 底部 -->
 	<div id="footer" class="footer"></div>
 
 	<script>
-		//获取所有文章
-		$(document).ready(
-				function loadArticle() {
-					$.ajax({
-						type : "GET",
-						url : "http://localhost:8080/allArticleList",
-						success : function(data) {
-							$.each(data, function(i, item) {
-								$("#tbodydata").append(
-										"<tr><td>" + item.articleID
-												+ "</td><td><a href='#'>"
-												+ item.articleName
-												+ "</a></td><td>" + item.userID
-												+ "</td></tr>");
-							});
-						}
+		var page = 0;   //第几条
+		var allArticleTotalCount = 0;//总博客的条数
+		var pageCount = 0;
+		var nowPageCount = 1;
+		$(document).ready(function(){
+			//获取所有文章
+			/* $.ajax({
+				type : "GET",
+				url : "http://localhost:8080/allArticleList",
+				success : function(data) {
+					$.each(data, function(i, item) {
+						$("#tbodydata").append("<tr><td>" + item.articleID+ "</td><td><a href='#'>"+ item.articleName+ "</a></td><td>" + item.userID+ "</td></tr>");
 					});
-				});
-
+				}
+			}); */
+			
+			//调用获取前5页的方法
+			fiveArticle(page);
+		});
+		
+		 //获取博客表页数
+		$.ajax({
+			type: "GET",
+			url:"http://localhost:8080/artTotalCount",
+			success:function(data){
+				allArticleTotalCount = data;  //获取博客条数
+				pageCount = (allArticleTotalCount + 4)/5
+			}
+		}); 
+		
+		//获取前5页博客的方法
+		function fiveArticle(page){
+			$.ajax({
+				type:"GET",
+				url:"http://localhost:8080/fiveAllArticleList",
+				data:"page="+page,
+				success:function(data){
+					$("#tbodydata").html("");
+					$.each(data,function(i,item){
+						$("#tbodydata").append("<tr><td>" + item.articleID+ "</td><td><a href='#'>"+ item.articleName+ "</a></td><td>" + item.userID+ "</td></tr>");
+					})
+				}
+			});
+		}
+		
+		//点击翻下一页
+		$("#nextArticlePage").click(function(){
+			if(nowPageCount<parseInt(pageCount)){
+				nowPageCount++;
+				page = page+5;
+			}else{
+				nowPageCount = 1;
+				page = 0;
+			}
+			//console.log(page);
+			//console.log(nowPageCount);
+			fiveArticle(page);
+		});
+		
+		//点击翻上一页
+		$("#lastArticlePage").click(function(){
+			if(nowPageCount>1){
+				nowPageCount--;
+				page = page-5;
+			}else{
+				nowPageCount = parseInt(pageCount);
+				page = (4-1)*5;
+			}
+			//console.log(page);
+			//console.log(nowPageCount);
+			fiveArticle(page);
+		})
+		
 		//头部登录按钮
 		$("#signBtn").click(function() {
 			location.href = "/html/logins.html";
-		})
+		});
+		
+		
+		
 	</script>
 
 </body>

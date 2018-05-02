@@ -3,7 +3,6 @@ package com.zzn.demo.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,6 +22,7 @@ public class ArticleController {
 	@RequestMapping(value = "/allArticleList", method = RequestMethod.GET)
 	public List<Article> allArticleLsit() {
 		List<Article> list = articleService.allArticleList();
+
 		return list;
 	}
 
@@ -60,8 +60,21 @@ public class ArticleController {
 
 	// 更新博客
 	@RequestMapping(value = "/updateArt", method = RequestMethod.GET)
-	public int updateArt(@RequestParam(value = "articleid", required = false) Integer articleid,@RequestParam(value = "articlecontent", required = false) String articlecontent) {
-		return articleService.updateArt(articleid,articlecontent);
+	public int updateArt(@RequestParam(value = "articleid", required = false) Integer articleid,
+			@RequestParam(value = "articlecontent", required = false) String articlecontent) {
+		return articleService.updateArt(articleid, articlecontent);
 	}
 
+	// 分页，查询10条博客
+	@RequestMapping(value = "/fiveAllArticleList", method = RequestMethod.GET)
+	public List<Article> fiveArticleList(@RequestParam(value = "page") Integer page) {
+		List<Article> list = articleService.fiveArticleList(page);
+		return list;
+	}
+
+	//分页，获取博客表总条数
+	@RequestMapping(value = "/artTotalCount", method = RequestMethod.GET)
+	public int artTotalCount() {
+		return articleService.artTotalCount();
+	}
 }

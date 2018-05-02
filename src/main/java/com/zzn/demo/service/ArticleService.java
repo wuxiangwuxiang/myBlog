@@ -48,4 +48,14 @@ public class ArticleService {
 		return articleMapper.updateArticle(aticleID,articleContent);
 	}
 	
+	//分页，查询10条博客
+	public  List<Article> fiveArticleList(Integer page){
+		List<Article> list = articleMapper.getFiveArticleList(page);
+		return list;
+	}
+	
+	//分页，获取博客表总条数
+	public int artTotalCount() {
+		return articleMapper.getArtTotalCount();
+	}
 }

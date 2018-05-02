@@ -29,7 +29,7 @@ public class MyBlogApplication extends WebMvcConfigurerAdapter{
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		super.addInterceptors(registry);
-		registry.addInterceptor(logInterceptor()).addPathPatterns("/**").excludePathPatterns("/login","/register","/allArticleList");
+		registry.addInterceptor(logInterceptor()).addPathPatterns("/**").excludePathPatterns("/login","/register","/allArticleList","/fiveAllArticleList","/artTotalCount");
 //		registry.addInterceptor(logInterceptor()).addPathPatterns("/static/**").excludePathPatterns("/login","/register","/allArticleList");
 	}
 	
