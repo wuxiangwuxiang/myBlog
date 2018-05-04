@@ -3,59 +3,141 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link type="text/css" rel="stylesheet" href="../css/myBlog.css">
 <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../layui/layui.js"></script>
+<link type="text/css" rel="stylesheet" href="../layui/css/layui.css">
+<link type="text/css" rel="stylesheet" href="../css/myBlog.css">
 </head>
 <body>
-	<div>
-		<!-- 头部 -->
-		<div id="header" class="header"></div>
+	<div class="layui-layout layui-layout-admin">
 
-		<!-- 内容 -->
-		<div id="contenter" class="contenter">
-			<form id="loginForm" class="loginForm" action="/html/homePage.html">
-				<label for="userid">账号：</label> <input type="text" name="userid"
+		<!-- 头部 -->
+		<div class="layui-header layui-bg-cyan">
+			<div id="logo" class="layui-logo">MyBlog</div>
+			<!-- 头部区域（可配合layui已有的水平导航） -->
+			<ul class="layui-nav layui-layout-left">
+				<li class="layui-nav-item"><a
+					href="http://localhost:8080/html/mainPage.html">博客</a></li>
+				<li class="layui-nav-item"><a href="#">待开发</a></li>
+				<li class="layui-nav-item"><a href="#">待开发</a></li>
+				<li class="layui-nav-item"><a href="#">待开发</a></li>
+			</ul>
+			<ul class="layui-nav layui-layout-right">
+				<!-- <li class="layui-nav-item"><a href="javascript:;"> <img
+						src="http://t.cn/RCzsdCq" class="layui-nav-img"> 贤心
+				</a>
+					<dl class="layui-nav-child">
+						<dd>
+							<a href="">基本资料</a>
+						</dd>
+						<dd>
+							<a href="">安全设置</a>
+						</dd>
+					</dl></li> -->
+				<li class="layui-nav-item"><a id="regis" href="#">注册</a></li>
+			</ul>
+		</div>
+
+		<!-- 内容部-->
+		<div id="contenter" class="layui-body" style="left: 0;">
+			<!-- 登录模块 -->
+			<div
+				style="width: 600px; position: absolute; left: 29%; top: 15%; padding: 15px;">
+				<!-- 登录表单 -->
+
+				<form id="loginForm" class="layui-form" action="/html/homePage.html"
+					style="border: 1.5px solid #c2c2c2; padding: 15px;">
+					<h1
+						style="font-size: 25px; font-weight: lighter; text-align: left; padding-left: 16%;">账号登录</h1>
+					<br> <br>
+					<!-- 账号框 -->
+					<div class="layui-form-item"
+						style="width: 400px; margin-left: 15%;">
+						<label class="layui-form-label" for="userid">账号:</label>
+						<div class="layui-input-block">
+							<input id="userid" type="text" name="userid" required
+								lay-verify="required" placeholder="请输入您的账号" autocomplete="off"
+								class="layui-input">
+						</div>
+					</div>
+					<!-- 密码框 -->
+					<div class="layui-form-item" style="width: 400px; margin-left: 15%">
+						<label class="layui-form-label" for="userpwd">密码:</label>
+						<div class="layui-input-inline">
+							<input type="password" name="userpwd" required
+								lay-verify="required" placeholder="请输入密码" autocomplete="off"
+								class="layui-input" style="width: 290px;">
+						</div>
+					</div>
+					<!-- <label for="userid">账号：</label> <input type="text" name="userid"
 					id="userid"> <br> <br> <br> <label
 					for="userpwd">密码：</label> <input type="password" name="userpwd"
-					id="userpwd"> <br> <br> <br> <input
-					type="submit" id="sub" value="登录">&nbsp;&nbsp;<input type="button"
-					id="regis" value="注册">
-			</form>
+					id="userpwd"> <br> <br> <br> -->
+					<br> <br>
+					<div class="layui-form-item" style="text-align: center;">
+						<div class="layui-input-block" style="width: 100%; margin-left: 0;">
+							<input type="submit" class=" layui-btn my-btn-primary" id="sub"
+								value="登录">&nbsp;&nbsp;
+							<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+							<!-- <input class="layui-btn my-btn-primary" type="button" id="regis" value="注册"> -->
+						</div>
+					</div>
+				</form>
+			</div>
 		</div>
 
 		<!-- 底部 -->
-		<div id="footer" class="footer"></div>
+		<div class="layui-footer" style="left: 0; background-color: #2F4056">
+			<!-- 底部固定区域 -->
+			<div style="margin-left: 20%">
+				<a href="#" style="color: #e2e2e2">版权巴拉巴拉</a>
+			</div>
+		</div>
 
 	</div>
 
 	<script>
+		//layui的JavaScript代码区域
+		layui.use([ 'element', 'form' ], function() {
+			var element = layui.element, form = layui.form;
+		});
+
+		/*-------------------------------------------------------------------分界线-------------------------------------------------------------------------------------
+		 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+		 ----*/
+
+		//个人js区域
 		$("#sub").click(function() {
 			var userid = $("#userid").val();
-			var userpwd = $("#userpwd").val();	
+			var userpwd = $("#userpwd").val();
 			if (userid == "" || userpwd == "") {
 				alert("用户ID或密码不能为空");
 			} else {
 				$.ajax({
-					type:"GET",
-					url :"http://localhost:8080/login",
-					data:"userid="+userid+"&userpwd="+userpwd,
-					success:function(data){
+					type : "GET",
+					url : "http://localhost:8080/login",
+					data : "userid=" + userid + "&userpwd=" + userpwd,
+					success : function(data) {
 						console.log(data);
-						if("empty"==data){
-						}else if("error"==data){
+						if ("empty" == data) {
+						} else if ("error" == data) {
 							alert("账号或密码错误");
-						}else if("yes"==data){
-							location.href='/html/homePage.html';
+						} else if ("yes" == data) {
+							location.href = '/html/homePage.html';
 						}
 					}
 				})
 			}
 		});
-		
-		/* $('') */
-		
-		$("#regis").click(function(){
-			location.href="/html/registers.html";
+
+		//注册，点击事件
+		$("#regis").click(function() {
+			location.href = "/html/registers.html";
+		})
+
+		//头部logo点击事件
+		$("#logo").click(function() {
+			location.href = "/html/mainPage.html";
 		})
 	</script>
 

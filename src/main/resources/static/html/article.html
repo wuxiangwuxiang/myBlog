@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../layui/layui.js"></script>
+<link type="text/css" rel="stylesheet" href="../layui/css/layui.css">
+<link type="text/css" rel="stylesheet" href="../css/myBlog.css">
+</head>
+<body>
+	<div class="layui-layout layui-layout-admin">
+		<!-- 头部 -->
+		<div class="layui-header layui-bg-cyan">
+			<div id="logo" class="layui-logo">MyBlog</div>
+			<!-- 头部区域（可配合layui已有的水平导航） -->
+			<ul class="layui-nav layui-layout-left">
+				<li class="layui-nav-item"><a
+					href="http://localhost:8080/html/mainPage.html">博客</a></li>
+				<li class="layui-nav-item"><a href="#">待开发</a></li>
+				<li class="layui-nav-item"><a href="#">待开发</a></li>
+				<li class="layui-nav-item"><a href="#">待开发</a></li>
+			</ul>
+			<ul class="layui-nav layui-layout-right">
+				<li class="layui-nav-item"><a id="signBtn" href="#">登录</a></li>
+			</ul>
+		</div>
+
+		<!-- 内容部 -->
+		<div id="contenter" class="layui-body layui-bg-gray" style="left: 0;">
+			<!-- 博客作者简介区 -->
+			<!-- <div>
+				
+			</div> -->
+			<!-- 博客文章区 -->
+			<div class="allArtilceTableDiv" style="background-color: white;width: 730px">
+				<h1 id="bokeTitle" style="font-size: 25px;font-weight: bolder;"></h1>
+				<hr>
+				<textarea id="bokeContent" readonly="readonly" style="width:700px;height:1000px;font-size: 20px;border:none;padding:15px;">     </textarea>
+			</div>
+		</div>
+
+		<!-- 底部 -->
+		<!-- <div id="footer" class="footer"></div> -->
+		<div class="layui-footer" style="left: 0; background-color: #2F4056">
+			<!-- 底部固定区域 -->
+			<div style="margin-left: 20%">
+				<a href="#" style="color: #e2e2e2">版权巴拉巴拉</a>
+			</div>
+		</div>
+
+	</div>
+
+	<script>
+		//layui的JavaScript代码区域
+		layui.use('element', function(){
+  			var element = layui.element;
+  		});
+/*-------------------------------------------------------------------分界线-------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+----*/
+		//个人js区域
+		$(document).ready(function() {	
+			//获取解析所传数据
+			$.getUrlParam = function(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				//alert(r);
+				if (r != null) {
+					return unescape(r[2]);
+				} else {
+					return null;
+				}
+			}
+			//获取articleid
+			var articleid = $.getUrlParam('articleid');
+			//console.log(articleid);
+			//把博客内容加载到textarea内
+			$.ajax({
+				type : "GET",
+				url : "http://localhost:8080/article",
+				data : "articleid=" + articleid,
+				success : function(data) {
+					$("#bokeContent").append(data.articleContent);
+					//console.log(data.articleContent);
+					$("#bokeTitle").append(data.articleName);
+					//console.log(data.articleName);
+				}
+			});
+		});
+
+		//头部登录按钮
+		$("#signBtn").click(function() {
+			location.href = "/html/logins.html";
+		});
+		
+		//头部logo点击事件
+		$("#logo").click(function(){
+			location.href = "/html/mainPage.html";
+		})
+	</script>
+</body>
+</html>
