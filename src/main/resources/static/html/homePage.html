@@ -9,13 +9,14 @@
 <body>
 	<!-- 头部 -->
 	<div id="header" class="header">
-		<button style="width:50px;height:50px;display:none;" onclick="articleShow()" id="articleShow">返回主页列表</button>
+		<button style="width: 50px; height: 50px; display: none;"
+			onclick="articleShow()" id="articleShow">返回主页列表</button>
 	</div>
-	
+
 	<!-- 内容部 -->
 	<div id="contenter" class="contenter">
 		<!-- 个人博客列表模块 -->
-		
+
 		<button id="writeBoke" class="writeBoke">写博客</button>
 		
 		<div id="allArticleModel">
@@ -31,10 +32,10 @@
 				</tbody>
 			</table>
 		</div>
-		
+
 		<!-- 查看具体博客内容模块 -->
-		<div id="articleModel" style="display: none;">
-			<!-- 文章区 -->
+<!-- 		<div id="articleModel" style="display: none;">
+			文章区
 			<div id="article">
 				<div id="articleName">
 					<h1 id="title">题目:</h1>
@@ -43,13 +44,15 @@
 					<textarea id="content" rows="20" cols="60" style="font-size: 15px;"></textarea>
 				</div>
 				<div id="articleOperate">
-					<p id="saveChangeArticleID" style="display: none;"></p>    <!-- 保存查看的博客ID -->
-					<button id="saveChangeArticle">保存</button>  <!-- 保存修改后的博客 -->
+					<p id="saveChangeArticleID" style="display: none;"></p>
+					保存查看的博客ID
+					<button id="saveChangeArticle">保存</button>
+					保存修改后的博客
 				</div>
 			</div>
-			<hr>
+			<hr> -->
 			<!-- 评论区 -->
-			<div id="articleComment">
+<!-- 			<div id="articleComment">
 				<h1>评论区</h1>
 				<table id="artComment" class="artComment">
 					<thead>
@@ -66,9 +69,9 @@
 					<button id="lastCommentPage">上一页</button>
 					<button id="nextCommentPage">下一页</button>
 				</div>
-			</div>			
-		</div>
-		
+			</div>
+		</div> -->
+
 		<!-- 写博客模块 -->
 		<div id="writeAticle" style="display: none;">
 			<!-- 标题区 -->
@@ -81,36 +84,38 @@
 				<textarea id="writeContent" rows="20" cols="60"></textarea>
 			</div>
 			<div>
-				<button id="saveArticle">保存</button>  <!-- 保存新写的博客 -->
+				<button id="saveArticle">保存</button>
+				<!-- 保存新写的博客 -->
 			</div>
 		</div>
-		
+
 		<!-- 用来保存登录后的userID -->
 		<div style="display: none;">
 			<p id="saveUserID"></p>
 		</div>
-		
-		
+
+
 	</div>
-		
+
 	<!-- 足部 -->
 	<div id="footer" class="footer"></div>
 
 	<script>
 		$(document).ready(function() {
+			
+			//主页显示个人博客列表
 			$.ajax({
 				type : "GET",
 				url : "http://localhost:8080/sbArticleList",
 				success : function(data) {
 					$.each(data, function(i, item) {
+						//console.log("11111111");
 						$("#tbodydata").append("<tr><td>" + item.articleID + "</td><td><a onclick='articleHide(this)' href='#'>" + item.articleName + "</a></td><td>" + "<input name='deleteBoke' type='button' value='删除' onclick='getTableContent(this)'>"+ "</td></tr>");
 					});
 				},
-				error:function(){
-					location.href = "/html/mainPage.html";
-				} 
 			});
 			
+			//在页面上存数据,后期要刪掉
 			$.ajax({
 				type:"GET",
 				url:"http://localhost:8080/searchUser",
@@ -148,11 +153,11 @@
             });
 		}
 		
-		var page = 0;                 //第几条
-		var allCommentTotalCount = 0; //总博客的条数
-		var pageCount = 0;            //总博客的总页数
-		var nowPageCount = 1;         //总博客列表的当前页
-		var pagesize = 5;            //每页显示的数量
+		var page = 0;                 //评论第几条
+		var allCommentTotalCount = 0; //总评论的条数
+		var pageCount = 0;            //总评论的总页数
+		var nowPageCount = 1;         //总评论列表的当前页
+		var pagesize = 5;            //每页显示评论的数量
 		var articleid = 0;
 		
 		//隐藏列表，显示文章区
@@ -166,6 +171,17 @@
 			$("#articleModel").show();
 			$("#articleShow").show();
 			$("#writeBoke").show();	
+			
+			//把articleid传到文章详情页
+			$.ajax({
+				type:"GET",
+            	url:"article.html",
+            	data:"articleid="+articleid,
+            	success:function(){
+            		location.href='personalArticle.html?articleid='+articleid;
+            	}
+			});
+			
 			$.ajax({
 				type:"GET",
 				url:"http://localhost:8080/article",
@@ -178,7 +194,7 @@
 				}
 			});
 			
-			//获取评论页数
+/* 			//获取评论页数
 			$.ajax({
 				type : "GET",
 				url : "http://localhost:8080/commentTotalCount",
@@ -190,10 +206,10 @@
 					//console.log(allCommentTotalCount);
 					//console.log(pageCount);
 				}
-			});
+			}); */
 					
 			//显示评论
-			fiveComment(page);
+			//fiveComment(page);
 			 /* $.ajax({
 				type:"GET",
 				url:"http://localhost:8080/searchArticleComment",
@@ -205,7 +221,7 @@
 				}
 			})  */
 		}
-		
+/* 		
 		//获取前5页评论的方法
 		function fiveComment(page) {
 			//console.log(pagesize);
@@ -220,9 +236,9 @@
 					});
 				}
 			});
-		}
+		} */
 		
-		
+/* 		
 		//点击翻页下一页评论
 		$("#nextCommentPage").click(function() {
 			if (nowPageCount < parseInt(pageCount)) {
@@ -249,7 +265,7 @@
 			//console.log(page);
 			//console.log(nowPageCount);
 			fiveComment(page);
-		});
+		}); */
 		
 		//隐藏文章，返回列表
 		function articleShow(){

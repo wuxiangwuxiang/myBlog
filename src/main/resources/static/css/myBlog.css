@@ -30,25 +30,6 @@
 	text-align: center;	
 }
 
-.loginForm {
-	position: absolute;
-	top: 30%;
-	width: 35%;
-	left: 30%;
-	background: rgba(0, 0, 0, 0.4);
-	padding-top: 2%;
-	padding-bottom: 2%;
-}
-
-.rightHeader {
-	position: absolute;
-	right: 0%;
-	width: 25%;
-	top: 10%;
-	height: 80%;
-	bottom: 10%;
-}
-
 .signBtn {
 	position: absolute;
 	width: 15%;
@@ -88,7 +69,16 @@ a {
 
 .my-btn-primary{border:1px solid rgba(244, 68, 68, 0.901961);background-color:#fff;color:rgba(244, 68, 68, 0.901961);}
 .my-btn-primary:hover{border-color:rgba(244, 68, 68, 0.901961);color:rgba(244, 68, 68, 0.901961);background-color: rgba(244, 68, 68, 0.15);}
+.forget{
+	margin-left: 290px!important;
+}
+.forget:hover{color:rgba(244, 68, 68, 0.901961)!important;}
 
+#nowRegist{color:#01AAED}
+#nowRegist:hover{color:#2F4056}
+#logo{
+	cursor:pointer;
+}
 /* background-color: rgba(244, 68, 68, 0.901961); */
 
 /* img{

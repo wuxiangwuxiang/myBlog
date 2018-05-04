@@ -3,20 +3,92 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link type="text/css" rel="stylesheet" href="../css/myBlog.css">
 <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../layui/layui.js"></script>
+<link type="text/css" rel="stylesheet" href="../layui/css/layui.css">
+<link type="text/css" rel="stylesheet" href="../css/myBlog.css">
 </head>
 <body>
-	<div>
+	<div class="layui-layout layui-layout-admin">
 		<!-- 头部 -->
-		<div id="header" class="header">
-			<div id="rightHeader" class="rightHeader">
-				<button id="signBtn" class="signBtn">登录</button>
+		<div class="layui-header layui-bg-cyan">
+			<div id="logo" class="layui-logo">MyBlog</div>
+			<!-- 头部区域（可配合layui已有的水平导航） -->
+			<ul class="layui-nav layui-layout-left">
+				<li class="layui-nav-item"><a
+					href="http://localhost:8080/html/mainPage.html">博客</a></li>
+				<li class="layui-nav-item"><a href="#">待开发</a></li>
+				<li class="layui-nav-item"><a href="#">待开发</a></li>
+				<li class="layui-nav-item"><a href="#">待开发</a></li>
+			</ul>
+			<ul class="layui-nav layui-layout-right">
+				<li class="layui-nav-item"><a id="signBtn" href="#">登录</a></li>
+			</ul>
+		</div>
+
+		<!-- 内容部 -->
+		<!-- 内容部-->
+		<div id="contenter" class="layui-body" style="left: 0;">
+			<!-- 登录模块 -->
+			<div
+				style="width: 600px; position: absolute; left: 29%; top: 15%; padding: 15px;">
+				<!-- 登录表单 -->
+
+				<form id="registForm" class="layui-form" action="" target="regist_iframe"
+					style="border: 1.5px solid #c2c2c2; padding: 15px;">
+					<h1
+						style="font-size: 25px; font-weight: lighter; text-align: left; padding-left: 16%;">账号注册</h1>
+					<br> <br>
+					<!-- 密码框 -->
+					<div class="layui-form-item" style="width: 400px; margin-left: 15%">
+						<label class="layui-form-label" for="userpwd">密码:</label>
+						<div class="layui-input-inline">
+							<input type="password" id="userpwd" name="userpwd" required
+								lay-verify="required" placeholder="请输入密码" autocomplete="off"
+								class="layui-input" style="width: 290px;">
+						</div>
+					</div>
+					<!-- 昵称框 -->
+					<div class="layui-form-item"
+						style="width: 400px; margin-left: 15%;">
+						<label class="layui-form-label" for="username">昵称:</label>
+						<div class="layui-input-block">
+							<input id="username" type="text" name="username" required
+								lay-verify="required" placeholder="请输入您喜欢的昵称" autocomplete="off"
+								class="layui-input">
+						</div>
+					</div>
+
+					<br><br>
+					<!-- 提交与重置按钮 -->
+					<div class="layui-form-item" style="text-align: center;">
+						<div class="layui-input-block"
+							style="width: 100%; margin-left: 0;">
+							<input type="submit" class=" layui-btn my-btn-primary" id="sub"
+								value="注册" style="width: 90px;">&nbsp;&nbsp;
+							<button type="reset" class="layui-btn layui-btn-primary"
+								style="width: 90px;">重置</button>
+						</div>
+					</div>
+					
+					<br>
+					<!-- 如有则登录链接 -->
+					<div class="layui-form-item" style="text-align: center;">
+						<div class="layui-input-block"
+							style="width: 100%; margin-left: -120px;">
+							<span>已经有账号？</span>
+							<a id="nowRegist" href="http://localhost:8080/html/logins.html"
+								>立即登录</a>
+						</div>
+					</div>
+				</form>
+				
+				<!-- 用来表单刷新 -->
+				<iframe id="regist_iframe" name="regist_iframe" style="display:none;"></iframe>  
 			</div>
 		</div>
 
-		<!-- 内容 -->
-		<div id="contenter" class="contenter">
+<!-- 		<div id="contenter" class="contenter">
 			<form id="loginForm" class="loginForm">
 				<label for="userpwd">密码：</label> <input type="password"
 					name="userpwd" id="userpwd"> <br> <br> <br>
@@ -24,14 +96,30 @@
 					id="username"> <br> <br> <br> <input
 					type="button" id="sub" value="提交">
 			</form>
-		</div>
+		</div> -->
 
 		<!-- 底部 -->
-		<div id="footer" class="footer"></div>
-
+		<div class="layui-footer" style="left: 0; background-color: #2F4056">
+			<!-- 底部固定区域 -->
+			<div style="margin-left: 20%">
+				<a href="#" style="color: #e2e2e2">版权巴拉巴拉</a>
+			</div>
+		</div>
 	</div>
 
+
 	<script>
+		//layui的JavaScript代码区域
+		layui.use([ 'element', 'form' ], function() {
+			var element = layui.element, form = layui.form;
+		});
+
+		
+		/*-------------------------------------------------------------------分界线-------------------------------------------------------------------------------------
+		 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+		 ----*/
+
+		//个人js区域
 		$("#sub").click(function() {
 			var username = $("#username").val();
 			var userpwd = $("#userpwd").val();
@@ -43,14 +131,21 @@
 					url : "http://localhost:8080/register",
 					data : "userpwd=" + userpwd + "&username=" + username,
 					success : function() {
-						alert("注册成功");
+						alert("注册成功,请登录！");
+						location.href='logins.html'
 					}
 				})
 			}
 		});
 		
-		$("#signBtn").click(function(){
-			location.href="/html/logins.html";
+		//头部登录按钮
+		$("#signBtn").click(function() {
+			location.href = "/html/logins.html";
+		})
+		
+		//头部logo点击事件
+		$("#logo").click(function(){
+			location.href = "/html/mainPage.html";
 		})
 	</script>
 

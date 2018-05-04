@@ -20,18 +20,18 @@ public class MyBlogApplication extends WebMvcConfigurerAdapter{
 		SpringApplication.run(MyBlogApplication.class, args);		
 	}
 	
-	@Bean
+/*	@Bean
 	public LogInterceptor logInterceptor() {
 		return new LogInterceptor();
-	}
+	}*/
 	
 	//接口拦截器配置
-	@Override
+/*	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		super.addInterceptors(registry);
 		registry.addInterceptor(logInterceptor()).addPathPatterns("/**").excludePathPatterns("/login","/register","/allArticleList","/fiveAllArticleList","/artTotalCount","/article");
 //		registry.addInterceptor(logInterceptor()).addPathPatterns("/static/**").excludePathPatterns("/login","/register","/allArticleList");
-	}
+	}*/
 	
 	/*@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {

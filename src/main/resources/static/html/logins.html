@@ -64,24 +64,48 @@
 					<div class="layui-form-item" style="width: 400px; margin-left: 15%">
 						<label class="layui-form-label" for="userpwd">密码:</label>
 						<div class="layui-input-inline">
-							<input type="password" name="userpwd" required
+							<input type="password" id="userpwd" name="userpwd" required
 								lay-verify="required" placeholder="请输入密码" autocomplete="off"
 								class="layui-input" style="width: 290px;">
+						</div>
+					</div>
+
+					<!-- 忘记密码链接 -->
+					<div class="layui-form-item" style="text-align: center;">
+						<div class="layui-input-block"
+							style="width: 100%; margin-left: 0;">
+							<a class="forget"
+								href="http://localhost:8080/html/forgetPWD.html"
+								style="margin-left: 290px;">忘记密码？</a>
 						</div>
 					</div>
 					<!-- <label for="userid">账号：</label> <input type="text" name="userid"
 					id="userid"> <br> <br> <br> <label
 					for="userpwd">密码：</label> <input type="password" name="userpwd"
 					id="userpwd"> <br> <br> <br> -->
-					<br> <br>
+
+					<!-- 登录与重置按钮 -->
 					<div class="layui-form-item" style="text-align: center;">
-						<div class="layui-input-block" style="width: 100%; margin-left: 0;">
+						<div class="layui-input-block"
+							style="width: 100%; margin-left: 0;">
 							<input type="submit" class=" layui-btn my-btn-primary" id="sub"
-								value="登录">&nbsp;&nbsp;
-							<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+								value="登录" style="width: 90px;">&nbsp;&nbsp;
+							<button type="reset" class="layui-btn layui-btn-primary"
+								style="width: 90px;">重置</button>
 							<!-- <input class="layui-btn my-btn-primary" type="button" id="regis" value="注册"> -->
 						</div>
 					</div>
+					<br>
+					<!-- 劝注册链接 -->
+					<div class="layui-form-item" style="text-align: center;">
+						<div class="layui-input-block"
+							style="width: 100%; margin-left: -120px;">
+							<span>还没有账号？</span>
+							<a id="nowRegist" href="http://localhost:8080/html/registers.html"
+								>立即注册</a>
+						</div>
+					</div>
+
 				</form>
 			</div>
 		</div>
