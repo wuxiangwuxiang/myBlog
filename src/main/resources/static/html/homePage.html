@@ -4,37 +4,51 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../layui/layui.js"></script>
+<link type="text/css" rel="stylesheet" href="../layui/css/layui.css">
 <link type="text/css" rel="stylesheet" href="../css/myBlog.css">
 </head>
 <body>
-	<!-- 头部 -->
-	<div id="header" class="header">
-		<button style="width: 50px; height: 50px; display: none;"
-			onclick="articleShow()" id="articleShow">返回主页列表</button>
-	</div>
 
-	<!-- 内容部 -->
-	<div id="contenter" class="contenter">
-		<!-- 个人博客列表模块 -->
-
-		<button id="writeBoke" class="writeBoke">写博客</button>
-		
-		<div id="allArticleModel">
-			<table id="allArticleTable" class="allArticleTable">
-				<thead>
-					<tr class="cen">
-						<th>文章编号</th>
-						<th>文章标题</th>
-						<th>操作</th>
-					</tr>
-				</thead>
-				<tbody id="tbodydata">
-				</tbody>
-			</table>
+	<div class="layui-layout layui-layout-admin">
+		<!-- 头部 -->
+		<div class="layui-header layui-bg-cyan">
+			<div id="logo" class="layui-logo">MyBlog</div>
+			<!-- 头部列表区域 -->
+			<ul class="layui-nav layui-layout-left layui-bg-cyan">
+				<li class="layui-nav-item layui-this"><a
+					href="http://localhost:8080/html/homePage.html">博客</a></li>
+				<li class="layui-nav-item"><a href="#">待开发</a></li>
+				<li class="layui-nav-item"><a href="#">待开发</a></li>
+				<li class="layui-nav-item"><a href="#">待开发</a></li>
+			</ul>
+			<ul class="layui-nav layui-layout-right layui-bg-cyan">
+				<li class="layui-nav-item"><a id="loginOutLink" href="#">退出登录</a></li>
+			</ul>
 		</div>
 
-		<!-- 查看具体博客内容模块 -->
-<!-- 		<div id="articleModel" style="display: none;">
+		<!-- 内容部 -->
+		<div id="contenter" class="layui-body layui-bg-gray" style="left: 0;">
+			<!-- 个人博客列表模块 -->
+
+			<button id="writeBoke" class="writeBoke">写博客</button>
+
+			<div id="allArticleModel">
+				<table id="allArticleTable" class="allArticleTable">
+					<thead>
+						<tr class="cen">
+							<th>文章编号</th>
+							<th>文章标题</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody id="tbodydata">
+					</tbody>
+				</table>
+			</div>
+
+			<!-- 查看具体博客内容模块 -->
+			<!-- 		<div id="articleModel" style="display: none;">
 			文章区
 			<div id="article">
 				<div id="articleName">
@@ -52,7 +66,7 @@
 			</div>
 			<hr> -->
 			<!-- 评论区 -->
-<!-- 			<div id="articleComment">
+			<!-- 			<div id="articleComment">
 				<h1>评论区</h1>
 				<table id="artComment" class="artComment">
 					<thead>
@@ -72,38 +86,55 @@
 			</div>
 		</div> -->
 
-		<!-- 写博客模块 -->
-		<div id="writeAticle" style="display: none;">
-			<!-- 标题区 -->
-			<div>
-				<span style="font-size: 20px">标题：</span>
-				<textarea id="writeTitle" rows="3" cols="40" style="font-size: 5px;"></textarea>
+			<!-- 写博客模块 -->
+			<div id="writeAticle" style="display: none;">
+				<!-- 标题区 -->
+				<div>
+					<span style="font-size: 20px">标题：</span>
+					<textarea id="writeTitle" rows="3" cols="40"
+						style="font-size: 5px;"></textarea>
+				</div>
+				<!-- 博客正文区 -->
+				<div>
+					<textarea id="writeContent" rows="20" cols="60"></textarea>
+				</div>
+				<div>
+					<button id="saveArticle">保存</button>
+					<!-- 保存新写的博客 -->
+				</div>
 			</div>
-			<!-- 博客正文区 -->
-			<div>
-				<textarea id="writeContent" rows="20" cols="60"></textarea>
+
+			<!-- 用来保存登录后的userID -->
+			<div style="display: none;">
+				<p id="saveUserID"></p>
 			</div>
-			<div>
-				<button id="saveArticle">保存</button>
-				<!-- 保存新写的博客 -->
-			</div>
+
+
 		</div>
 
-		<!-- 用来保存登录后的userID -->
-		<div style="display: none;">
-			<p id="saveUserID"></p>
+		<!-- 底部 -->
+		<div class="layui-footer" style="left: 0; background-color: #2F4056">
+			<!-- 底部固定区域 -->
+			<div style="margin-left: 20%">
+				<a href="#" style="color: #e2e2e2">版权巴拉巴拉</a>
+			</div>
 		</div>
-
 
 	</div>
 
-	<!-- 足部 -->
-	<div id="footer" class="footer"></div>
-
 	<script>
+		//layui的JavaScript代码区域
+		layui.use('element', function(){
+  			var element = layui.element;
+  		});
+		/*---------------------------------------------------------------------分界线-------------------------------------------------------------------------------------
+		---------------------------------------------------------------------------------------------------------------------------------------------------------------
+		----*/
+		
+		/* 个人js区域 */
 		$(document).ready(function() {
 			
-			//主页显示个人博客列表
+			/* 主页显示个人博客列表 */
 			$.ajax({
 				type : "GET",
 				url : "http://localhost:8080/sbArticleList",
@@ -115,7 +146,7 @@
 				},
 			});
 			
-			//在页面上存数据,后期要刪掉
+			/* 在页面上存数据,后期要刪掉 */
 			$.ajax({
 				type:"GET",
 				url:"http://localhost:8080/searchUser",
@@ -123,7 +154,23 @@
 					$("#saveUserID").append(data);
 				}
 			});
-		});
+			
+			/* 登录拦截跳转登录页面 */
+			$.ajax({
+				type:"GET",
+				url:"http://localhost:8080/intercept",
+				success:function(data){
+					console.log(data);
+					if(data == 0){
+						//console.log("YES");
+					}else{
+						//console.log("NO");
+						location.href = "/html/logins.html";
+					}
+				},
+			});
+			
+		});  /* ready部分结束 */
 		
 		//点击按钮删除博客
 		function getTableContent(node){
@@ -160,18 +207,12 @@
 		var pagesize = 5;            //每页显示评论的数量
 		var articleid = 0;
 		
-		//隐藏列表，显示文章区
+		//点击，显示文章详情与评论
 		function articleHide(node1){
 			var tr1 = node1.parentNode.parentNode;
 			//alert(tr1.rowIndex);  
             //alert(tr1.cells[0].innerText);
             articleid = tr1.cells[0].innerText;
-			$("#allArticleModel").hide();		//具体每个代表着哪个模块下面有
-			$("#writeAticle").hide();
-			$("#articleModel").show();
-			$("#articleShow").show();
-			$("#writeBoke").show();	
-			
 			//把articleid传到文章详情页
 			$.ajax({
 				type:"GET",
@@ -182,7 +223,7 @@
             	}
 			});
 			
-			$.ajax({
+			/* $.ajax({
 				type:"GET",
 				url:"http://localhost:8080/article",
 				dataType:"json",
@@ -192,7 +233,7 @@
 					$("#content").append(data.articleContent);
 					$("#saveChangeArticleID").append(articleid);
 				}
-			});
+			}); */
 			
 /* 			//获取评论页数
 			$.ajax({
@@ -285,7 +326,7 @@
 			$("#writeBoke").hide();       //写博客按钮
 		})
 		
-		//写博客模块
+		/* 写博客模块 */
 		$("#saveArticle").click(function(){
 			var articlename = document.getElementById("writeTitle").value;
 			var articlecontent = document.getElementById("writeContent").value;
@@ -304,7 +345,7 @@
 			});  
 		});
 		
-		//更新博客模块
+		/* 更新博客模块 */
 		$("#saveChangeArticle").click(function(node2){
 			var articleid = $("#saveChangeArticleID").html();
 			//console.log(articleid);
@@ -319,8 +360,20 @@
 					location.href = "/html/homePage.html";
 				}
 			}); 
-		})
-
+		});
+		
+		/* 退出登录 */
+		 $("#loginOutLink").click(function(){
+			$.ajax({
+				type:"GET",
+				url:"http://localhost:8080/loginOut",
+				success:function(){
+					location.href="/html/mainPage.html";
+				}
+			});
+		}); 
+		
+		
 	 		
 	</script>
 

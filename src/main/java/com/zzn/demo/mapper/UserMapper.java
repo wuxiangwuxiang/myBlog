@@ -25,4 +25,6 @@ public interface UserMapper {
 	
 	//获取所有的个人信息
 	/*@Select("select UserID,UserName,")*/
+	
+	
 }

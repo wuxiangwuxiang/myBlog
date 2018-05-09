@@ -9,30 +9,31 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-
-
 @SpringBootApplication
 @ComponentScan("com.zzn.demo.**")
-@MapperScan("com.zzn.demo.mapper")//扫描
-public class MyBlogApplication extends WebMvcConfigurerAdapter{
+@MapperScan("com.zzn.demo.mapper") // 扫描
+public class MyBlogApplication extends WebMvcConfigurerAdapter {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MyBlogApplication.class, args);		
+		SpringApplication.run(MyBlogApplication.class, args);
 	}
-	
-/*	@Bean
+
+	@Bean
 	public LogInterceptor logInterceptor() {
 		return new LogInterceptor();
-	}*/
-	
-	//接口拦截器配置
-/*	@Override
+	}
+
+	// 接口拦截器配置
+	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		super.addInterceptors(registry);
-		registry.addInterceptor(logInterceptor()).addPathPatterns("/**").excludePathPatterns("/login","/register","/allArticleList","/fiveAllArticleList","/artTotalCount","/article");
-//		registry.addInterceptor(logInterceptor()).addPathPatterns("/static/**").excludePathPatterns("/login","/register","/allArticleList");
-	}*/
-	
+		registry.addInterceptor(logInterceptor()).addPathPatterns("/**").excludePathPatterns("/login", "/register",
+				"/loginOut", "/fiveAllArticleList", "/intercept", "/allArticleList", "/artTotalCount", "/article");
+		/* login:登录,register:注册,fiveAllArticleList:获取博客列表（前五页）,intercept:检验session拦截 */
+
+		// registry.addInterceptor(logInterceptor()).addPathPatterns("/static/**").excludePathPatterns("/login","/register","/allArticleList");
+	}
+
 	/*@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/static/**");

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../layui/layui.js"></script>
+<link type="text/css" rel="stylesheet" href="../layui/css/layui.css">
+<link type="text/css" rel="stylesheet" href="../css/myBlog.css">
+</head>
+<body>
+	<div class="layui-layout layui-layout-admin">
+		<!-- 头部 -->
+		<div class="layui-header layui-bg-cyan">
+			<div id="logo" class="layui-logo">MyBlog</div>
+			<!-- 头部区域 -->
+			<ul class="layui-nav layui-layout-left">
+				<li class="layui-nav-item layui-this"><a
+					href="http://localhost:8080/html/homePage.html">博客</a></li>
+				<li class="layui-nav-item"><a href="#">待开发</a></li>
+				<li class="layui-nav-item"><a href="#">待开发</a></li>
+				<li class="layui-nav-item"><a href="#">待开发</a></li>
+			</ul>
+			<ul class="layui-nav layui-layout-right">
+				<li class="layui-nav-item"><a id="signBtn" href="#">登录</a></li>
+			</ul>
+		</div>
+
+		<!-- 内容部分 -->
+		<div id="contenter" class="layui-body layui-bg-gray" style="left: 0;">
+			<div style="background-color: white;width: 1000px;margin-left: 20%; text-align: center;">
+				<textarea autofocus="autofocus" placeholder="输入文章标题" style="resize:none;width: 900px;padding: 15px;"></textarea>
+				<textarea style="width: 900px; height: 1000px; font-size: 18px; padding: 15px;resize:none"></textarea>
+			</div>
+		</div>
+
+		<!-- 底部 -->
+		<div class="layui-footer" style="left: 0; background-color: #2F4056">
+			<!-- 底部固定区域 -->
+			<div style="margin-left: 20%">
+				<a href="#" style="color: #e2e2e2">版权巴拉巴拉</a>
+			</div>
+		</div>
+		
+	</div>
+
+
+</body>
+</html>

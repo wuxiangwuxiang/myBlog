@@ -25,7 +25,7 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 			logger.info(o.toString());
 		}else {
 			PrintWriter pw = response.getWriter();
-			pw.println("login please");
+			//pw.println("login please");
 			return false;
 		}	
 //		logger.info("wrong");

@@ -17,7 +17,7 @@
 			<!-- 头部区域（可配合layui已有的水平导航） -->
 			<ul class="layui-nav layui-layout-left">
 				<li class="layui-nav-item"><a
-					href="http://localhost:8080/html/mainPage.html">博客</a></li>
+					href="http://localhost:8080/html/homePage.html">博客</a></li>
 				<li class="layui-nav-item"><a href="#">待开发</a></li>
 				<li class="layui-nav-item"><a href="#">待开发</a></li>
 				<li class="layui-nav-item"><a href="#">待开发</a></li>
@@ -29,39 +29,42 @@
 
 		<!-- 内容部 -->
 		<div id="contenter" class="layui-body layui-bg-gray" style="left: 0;">
+			<div
+				style="position: absolute; margin-left: 9%; width: 1450px; text-align: center; position: absolute; top: 30px">
+				<!-- 博客文章区 -->
+				<div class="ArtilceContentDiv"
+					style="background-color: white; width: 930px; float: right;">
+					<h1 id="bokeTitle" style="font-size: 25px; font-weight: bolder;"></h1>
+					<hr>
+					<textarea id="bokeContent" readonly="readonly"
+						style="width: 900px; height: 1000px; font-size: 18px; border: none; padding: 15px;resize:none">     </textarea>
+				</div>
 
-			<!-- 博客文章区 -->
-			<div class="allArtilceTableDiv"
-				style="background-color: white; width: 730px">
-				<h1 id="bokeTitle" style="font-size: 25px; font-weight: bolder;"></h1>
-				<hr>
-				<textarea id="bokeContent" readonly="readonly"
-					style="width: 700px; height: 1000px; font-size: 20px; border: none; padding: 15px;">     </textarea>
-			</div>
-			
-			<!-- 博客评论区 -->
-			<div id="articleComment">
-				<h1>评论区</h1>
-				<table id="artComment" class="artComment">
-					<thead>
-						<tr class="cen">
-							<th>评论编号</th>
-							<th>评论内容</th>
-							<th>评论用户id</th>
-						</tr>
-					</thead>
-					<tbody id="artCommenttbody">
-					</tbody>
-				</table>
-				<div>
-					<button id="lastCommentPage">上一页</button>
-					<button id="nextCommentPage">下一页</button>
+				<!-- 博客评论区 -->
+				<div id="articleCommentDIV" style="background-color: white; width: 500px; float: left; height: 500px; position: fixed; z-index: 0;">
+					<h1 id="bokeTitle" style="font-size: 25px; font-weight: bolder;">评论区</h1>
+					<table id="artComment" class="layui-table" lay-size="lg" lay-even lay-skin="nob" style="width: 480px; margin: 1% 1%; overflow: hidden; table-layout: fixed; word-wrap: break-word;">
+						<thead>
+							<tr class="cen">
+								<!-- <th>评论编号</th> -->
+								<th>用户id</th>
+								<th>评论内容</th>
+							</tr>
+						</thead>
+						<tbody id="artCommenttbody" style="text-align: left;">
+						</tbody>
+					</table>
+					<div style="position: absolute; left: 30%; bottom: 4%;">
+						<button id="lastCommentPage" class="layui-btn my-btn-primary">上一页</button>
+						<button id="nextCommentPage" class="layui-btn my-btn-primary">下一页</button>
+					</div>
 				</div>
 			</div>
 		</div>
 
 		<!-- 底部 -->
-		<div class="layui-footer" style="left: 0; background-color: #2F4056">
+		<div class="layui-footer"
+			style="left: 0; background-color: #2F4056; z-index: 100">
 			<!-- 底部固定区域 -->
 			<div style="margin-left: 20%">
 				<a href="#" style="color: #e2e2e2">版权巴拉巴拉</a>
@@ -146,7 +149,7 @@
 				success : function(data) {
 					$("#artCommenttbody").html("");
 					$.each(data, function(i, item) {
-						$("#artCommenttbody").append("<tr><td>" + item.userID + "</td><td>" + item.commentID + "</td><td>"+item.commentContent+ "</td></tr>");
+						$("#artCommenttbody").append("<tr><td>" + item.userID + "</td><td>" +item.commentContent+ "</td></tr>");
 					});
 				}
 			});

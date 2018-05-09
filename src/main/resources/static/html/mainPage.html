@@ -46,8 +46,7 @@
 			<div id="allArtilceTableDiv" class="allArtilceTableDiv"
 				style="text-align: center; overflow: hidden;">
 				<!-- 博客列表 -->
-				<table id="allArticleTable" class="layui-table" lay-size="lg"
-					lay-even lay-skin="nob" style="text-align: center;">
+				<table id="allArticleTable" class="layui-table" lay-size="lg" lay-even lay-skin="nob" style="text-align: center;">
 					<thead>
 						<tr class="cen">
 							<th style="text-align: center; font-size: 18px">文章编号</th>
@@ -144,7 +143,7 @@
 				nowPageCount = 1;
 				page = 0;
 			}
-			console.log(page);
+			//console.log(page);
 			//console.log(nowPageCount);
 			//console.log(pageSize);
 			fiveArticle(page);
@@ -194,7 +193,6 @@
             var articleid1 = tr1.cells[0].innerText;
             var articlename = tr1.cells[1].innerText;
             //console.log(articlename);
-            
             $.ajax({
             	type:"GET",
             	url:"article.html",
