@@ -53,25 +53,42 @@ public class ArticleController {
 	@RequestMapping(value = "/insertArt", method = RequestMethod.GET)
 	public int insertArt(@RequestParam(value = "articlename", required = false) String articlename,
 			@RequestParam(value = "articlecontent", required = false) String articlecontent,
-			@RequestParam(value = "userid", required = false) Integer userid) {
+			@RequestParam(value = "userid", required = false) Integer userid, HttpSession session) {
+		userid = (Integer) session.getAttribute("userid");
+		// System.out.println(userid);
+		// System.out.println(userid+articlecontent+articlename);
+		/*
+		 * Integer artid= articleService.insertArt2(); System.out.println(artid);
+		 */
 		return articleService.insertArt(articlename, articlecontent, userid);
+	}
+
+	// 添加文章后获取id
+	@RequestMapping(value = "/insert2", method = RequestMethod.GET)
+	public int insert2() {
+		return articleService.insertArt2();
 	}
 
 	// 更新博客
 	@RequestMapping(value = "/updateArt", method = RequestMethod.GET)
 	public int updateArt(@RequestParam(value = "articleid", required = false) Integer articleid,
+			@RequestParam(value = "articlename", required = false) String articlename,
 			@RequestParam(value = "articlecontent", required = false) String articlecontent) {
-		return articleService.updateArt(articleid, articlecontent);
+		// System.out.println(articleid);
+		// System.out.println(articlename);
+		// System.out.println(articlecontent);
+		return articleService.updateArt(articleid, articlename, articlecontent);
 	}
 
 	// 分页，查询10条博客
 	@RequestMapping(value = "/fiveAllArticleList", method = RequestMethod.GET)
-	public List<Article> fiveArticleList(@RequestParam(value = "page") Integer page , @RequestParam(value = "pagesize") Integer pagesize) {
-		List<Article> list = articleService.fiveArticleList(page,pagesize);
+	public List<Article> fiveArticleList(@RequestParam(value = "page") Integer page,
+			@RequestParam(value = "pagesize") Integer pagesize) {
+		List<Article> list = articleService.fiveArticleList(page, pagesize);
 		return list;
 	}
 
-	//分页，获取博客表总条数
+	// 分页，获取博客表总条数
 	@RequestMapping(value = "/artTotalCount", method = RequestMethod.GET)
 	public int artTotalCount() {
 		return articleService.artTotalCount();

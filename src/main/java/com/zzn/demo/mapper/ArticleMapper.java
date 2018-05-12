@@ -34,16 +34,21 @@ public interface ArticleMapper {
 	@Insert("insert into Article (ArticleName,ArticleContent,UserID) values (#{ArticleName},#{ArticleContent},#{UserID})")
 	public int insertArticle(@Param("ArticleName") String ArticleName, @Param("ArticleContent") String ArticleContent,
 			@Param("UserID") Integer UserID);
-
+	
+	//添加文章后获取id
+	@Select("select last_insert_id()")
+	public Integer getNewArticleID();
+	
 	// 更新博客
-	@Update("UPDATE Article SET ArticleContent = #{articleContent} WHERE ArticleID = #{articleID}")
-	public int updateArticle(@Param("articleID") Integer ArticleID, @Param("articleContent") String ArticleContent);
+	@Update("UPDATE Article SET ArticleName =#{articleName}, ArticleContent = #{articleContent} WHERE ArticleID = #{articleID}")
+	public int updateArticle(@Param("articleID") Integer ArticleID, @Param("articleName") String ArticleName,
+			@Param("articleContent") String ArticleContent);
 
 	// 分页，查询pageSize条博客
 	@Select("select ArticleID ,ArticleName,ArticleContent ,UserID from Article order by ArticleID asc LIMIT #{page},#{pageSize}")
-	public List<Article> getFiveArticleList(@Param("page") Integer page,@Param("pageSize") Integer pageSize);
-	
-	//分页，获取博客表总条数
+	public List<Article> getFiveArticleList(@Param("page") Integer page, @Param("pageSize") Integer pageSize);
+
+	// 分页，获取博客表总条数
 	@Select("select count(*) from Article")
 	public int getArtTotalCount();
 }

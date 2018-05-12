@@ -2,58 +2,176 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>写博客</title>
 <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../layui/layui.js"></script>
+<link type="text/css" rel="stylesheet" href="../layui/css/layui.css">
 <link type="text/css" rel="stylesheet" href="../css/myBlog.css">
 </head>
 <body>
-	<div id="header" class="header">
-		<div id="rightHeader" class="rightHeader">
-			<button id="return" class="signBtn">返回</button>
+	<!-- 最外层DIV -->
+	<div class="layui-layout layui-layout-admin">
+
+		<!-- 头部 -->
+		<div class="layui-header layui-bg-cyan">
+			<div id="logo" class="layui-logo">MyBlog</div>
+			<!-- 头部列表区域 -->
+			<ul class="layui-nav layui-layout-left layui-bg-cyan">
+				<li class="layui-nav-item"><a
+					href="http://localhost:8080/html/myArticleListPage.html">个人博客</a></li>
+				<li class="layui-nav-item"><a
+					href="http://localhost:8080/html/writeArticle.html">写博客</a></li>
+				<li class="layui-nav-item"><a href="#">待开发</a></li>
+				<li class="layui-nav-item"><a href="#">待开发</a></li>
+			</ul>
+			<ul class="layui-nav layui-layout-right layui-bg-cyan">
+				<li class="layui-nav-item"><a id="loginOutLink" href="#">退出登录</a></li>
+			</ul>
 		</div>
+
+		<!-- 内容部 -->
+		<div id="contenter" class="layui-body layui-bg-gray" style="left: 0;">
+
+			<!-- 写博客DIV -->
+			<div id="writeArticleDIV"
+				style="background-color: white; width: 1000px; height: 700px; margin-top: 35px; margin-left: 460px; padding: 50px; padding-right: 50px;">
+				<!-- 写博客form -->
+				<form class="layui-form" action="" target="nm_iframe" style="">
+					<!-- 标题区 -->
+					<div class="layui-form-item layui-form-text">
+						<label class="layui-form-label">标题</label>
+						<div class="layui-input-block">
+							<textarea id="newArticleTitle" name="articlename"
+								placeholder="请输入标题" class="my-textarea"
+								style="resize: none; font-size: 25px; width: 800px; height: 35px; border: none; background-color: #eeeeee;"></textarea>
+						</div>
+					</div>
+					<!-- 博客正文区 -->
+					<div class="layui-form-item layui-form-text">
+						<label class="layui-form-label">正文</label>
+						<div class="layui-input-block">
+							<textarea id="newArticleContent" name="articlecontent"
+								placeholder="" class="layui-textarea"
+								style="resize: none; width: 820px; height: 500px; border-color: #d2d2d2;"></textarea>
+						</div>
+					</div>
+
+					<!-- 写博客操作区 -->
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+							<button id="subArticle" class="layui-btn my-btn-primary"
+								lay-submit lay-filter="formDemo">发布博客</button>
+							<button id="saveArticle" class="layui-btn my-btn-primary"
+								lay-submit lay-filter="formDemo" style="display: none;">保存博客</button>
+							<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+						</div>
+					</div>
+
+				</form>
+			</div>
+
+			<!-- 用来处理form提交后的刷新 -->
+			<iframe id="id_iframe" name="nm_iframe" style="display: none;"></iframe>
+
+		</div>
+
+		<!-- 底部 -->
+		<!-- <div id="footer" class="footer"></div> -->
+		<div class="layui-footer" style="left: 0; background-color: #2F4056">
+			<!-- 底部固定区域 -->
+			<div style="margin-left: 20%">
+				<a href="#" style="color: #e2e2e2">版权巴拉巴拉</a>
+			</div>
+		</div>
+
 	</div>
 
-	<div id="contenter" class="contenter">
-		<!-- 博客区 -->
-		<div>
-			<div>
-				<span style="font-size: 20px">标题：</span>
-				<textarea id="writeTitle" rows="3" cols="40" style="font-size: 5px;"></textarea>
-			</div>
-			<div>
-				<textarea id="writeContent" rows="20" cols="60"></textarea>
-			</div>
-			<div>
-				<button id="saveArticle">保存</button>
-			</div>
-		</div>
-		<hr>
-		<!-- 评论区 -->
-		<div>
-			<h1>评论区</h1>
-		</div>
-	</div>
-	<div id="footer" class="footer"></div>
 
 	<script>
-		//返回homePage按钮
-		$("#return").click(function() {
-			location.href = "/html/homePage.html";
+		//layui的JavaScript代码区域
+		layui.use([ 'element', 'layer' ], function() {
+			var element = layui.element, layer = layui.layer;
 		});
-		
-		
-		
-		$("#saveArticle").click(function(){
-			var articlename = document.getElementById("writeTitle").value;
-			var articlecontent = document.getElementById("writeContent").value;
+		/*---------------------------------------------------------------------分界线-------------------------------------------------------------------------------------
+		---------------------------------------------------------------------------------------------------------------------------------------------------------------
+		----*/
+
+		/* 个人js区域 */
+
+		var articleid = 0;
+		/* 发布博客,点击按钮把数据传到后台调用接口 */
+		$("#subArticle").click(function() {
+			var articlename = document.getElementById("newArticleTitle").value;
+			var articlecontent = document.getElementById("newArticleContent").value;  //获取相应textarea内的值
 			//console.log(articlename);
 			//console.log(articlecontent);
 			$.ajax({
-				type："GET",
-				url:"http://localhost:8080/insertArt",
-				data:
-			}); 
-		})
+				type : "GET",
+				url : "http://localhost:8080/insertArt",
+				data : "articlename=" + articlename + "&articlecontent=" + articlecontent,
+				success : function() {
+					$.ajax({
+						type:"GET",
+						url:"http://localhost:8080/insert2",
+						success:function(data){
+							articleid = data;
+						}
+					});
+					layer.confirm('提交成功！', {
+						btn : [ '留在本页', '返回主页' ]
+					}, function() {
+						layer.msg('您可以继续编辑博客', {
+							icon : 1
+						});
+						$("#subArticle").hide();
+						$("#saveArticle").show();
+					}, function() {
+						location.href = "/html/homePage.html";
+					});
+				}
+			});
+		});
+		
+		/* 修改保存博客 */
+		$("#saveArticle").click(function(){
+			var articlename = document.getElementById("newArticleTitle").value;    //获取相应textarea内的值
+			var articlecontent = document.getElementById("newArticleContent").value;
+			console.log(articleid);
+			console.log(articlename);
+			console.log(articlecontent);
+			$.ajax({
+				type:"GET",
+				url:"http://localhost:8080/updateArt",
+				data:"articleid="+articleid +"&articlename=" + articlename + "&articlecontent=" + articlecontent,
+				success:function(){
+					layer.confirm('保存成功！', {
+						btn : [ '继续编辑', '返回主页' ]
+					}, function() {
+						layer.msg('您可以继续编辑博客', {
+							icon : 1
+						});
+					}, function() {
+						location.href = "/html/homePage.html";
+					});
+				}
+			});
+		});
+		
+		/* 退出登录 */
+		$("#loginOutLink").click(function() {
+			$.ajax({
+				type : "GET",
+				url : "http://localhost:8080/loginOut",
+				success : function() {
+					location.href = "/html/mainPage.html";
+				}
+			});
+		});
+
+		//头部logo点击事件
+		$("#logo").click(function() {
+			location.href = "/html/homePage.html";
+		});
 	</script>
 
 </body>

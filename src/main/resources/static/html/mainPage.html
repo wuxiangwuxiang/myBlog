@@ -2,7 +2,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<!-- 登录前主页 -->
+<title>myBlog</title>
 <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="../layui/layui.js"></script>
 <link type="text/css" rel="stylesheet" href="../layui/css/layui.css">
@@ -16,13 +17,13 @@
 		<div class="layui-header layui-bg-cyan">
 			<div id="logo" class="layui-logo">MyBlog</div>
 			<!-- 头部区域（可配合layui已有的水平导航） -->
-			<ul class="layui-nav layui-layout-left">
+			<ul class="layui-nav layui-layout-left layui-bg-cyan">
 				<li class="layui-nav-item layui-this"><a href="http://localhost:8080/html/mainPage.html">博客</a></li>
-				<li class="layui-nav-item"><a href="#">待开发</a></li>
+				<li class="layui-nav-item"><a href="http://localhost:8080/html/logins.html">写博客</a></li>
 				<li class="layui-nav-item"><a href="#">待开发</a></li>
 				<li class="layui-nav-item"><a href="#">待开发</a></li>
 			</ul>
-			<ul class="layui-nav layui-layout-right">
+			<ul class="layui-nav layui-layout-right layui-bg-cyan">
 				<!-- <li class="layui-nav-item"><a href="javascript:;"> <img
 						src="http://t.cn/RCzsdCq" class="layui-nav-img"> 贤心
 				</a>
@@ -199,9 +200,8 @@
             	data:"articleid="+articleid1,
             	success:function(){
             		location.href='article.html?articleid='+articleid1;
-            	}
-            	
-            })
+            	}   	
+            });
             
 		}
 

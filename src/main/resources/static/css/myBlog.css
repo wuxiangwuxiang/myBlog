@@ -6,7 +6,7 @@
 }
 
 .header {
-
+	
 }
 
 .footer {
@@ -18,16 +18,16 @@
 }
 
 .contenter {
- 	background-image:url(../lib/backimg1.png);
+	background-image: url(../lib/backimg1.png);
 	background-repeat: no-repeat;
-	background-position:center; 
-	background-size:auto 100%;
-	background-attachment:fixed;
+	background-position: center;
+	background-size: auto 100%;
+	background-attachment: fixed;
 	position: absolute;
 	top: 8%;
 	height: 84%;
 	width: 100%;
-	text-align: center;	
+	text-align: center;
 }
 
 .signBtn {
@@ -39,46 +39,80 @@
 }
 
 .allArtilceTableDiv {
-	position:absolute;
+	position: absolute;
 	width: 40%;
 	left: 30%;
 	right: 30%;
 	top: 10%;
 	border-collapse: collapse;
 	font-size: 20px;
-	padding:0.5%;
+	padding: 0.5%;
 	background-color: white;
 }
 
 #allArticleTable {
-/* 	position: absolute;
+	/* 	position: absolute;
 	width: 30%;
 	left: 33.5%;
 	top: 5%;
 	border-collapse: collapse;
 	font-size: 20px; */
+	
 }
 
 #allArticleTable, th, td {
-/* 	border: 1px solid grey; */
+	/* 	border: 1px solid grey; */
+	
 }
 
 a {
-	text-decoration:none;
+	text-decoration: none;
 }
 
-.my-btn-primary{border:1px solid rgba(244, 68, 68, 0.901961);background-color:#fff;color:rgba(244, 68, 68, 0.901961);}
-.my-btn-primary:hover{border-color:rgba(244, 68, 68, 0.901961);color:rgba(244, 68, 68, 0.901961);background-color: rgba(244, 68, 68, 0.15);}
-.forget{
-	margin-left: 290px!important;
+/* 普通按钮 */
+.my-btn-primary {
+	border: 1px solid rgba(244, 68, 68, 0.901961);
+	background-color: #fff;
+	color: rgba(244, 68, 68, 0.901961);
 }
-.forget:hover{color:rgba(244, 68, 68, 0.901961)!important;}
 
-#nowRegist{color:#01AAED}
-#nowRegist:hover{color:#2F4056}
-#logo{
-	cursor:pointer;
+.my-btn-primary:hover {
+	border-color: rgba(244, 68, 68, 0.901961);
+	color: rgba(244, 68, 68, 0.901961);
+	background-color: rgba(244, 68, 68, 0.15);
 }
+
+/* 忘记密码 */
+.forget {
+	margin-left: 290px !important;
+}
+
+.forget:hover {
+	color: rgba(244, 68, 68, 0.901961) !important;
+}
+
+/* 立即注册 */
+#nowRegist {
+	color: #01AAED
+}
+
+#nowRegist:hover {
+	color: #2F4056
+}
+
+/* 头部logo */
+#logo {
+	cursor: pointer;
+}
+
+/* 文本域 */
+.my-textarea {
+	min-height: 35px;
+	height: auto;
+	padding: 6px 10px;
+	resize: none;
+}
+
 /* background-color: rgba(244, 68, 68, 0.901961); */
 
 /* img{

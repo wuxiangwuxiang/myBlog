@@ -2,23 +2,24 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<!-- 登陆后的主页 -->
+<title>myBlog</title>
 <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="../layui/layui.js"></script>
 <link type="text/css" rel="stylesheet" href="../layui/css/layui.css">
 <link type="text/css" rel="stylesheet" href="../css/myBlog.css">
 </head>
 <body>
-
+	<!-- 最外层DIV -->
 	<div class="layui-layout layui-layout-admin">
 		<!-- 头部 -->
 		<div class="layui-header layui-bg-cyan">
 			<div id="logo" class="layui-logo">MyBlog</div>
 			<!-- 头部列表区域 -->
 			<ul class="layui-nav layui-layout-left layui-bg-cyan">
-				<li class="layui-nav-item layui-this"><a
-					href="http://localhost:8080/html/homePage.html">博客</a></li>
-				<li class="layui-nav-item"><a href="#">待开发</a></li>
+				<li class="layui-nav-item"><a
+					href="http://localhost:8080/html/myArticleListPage.html">个人博客</a></li>
+				<li class="layui-nav-item"><a href="http://localhost:8080/html/writeArticle.html">写博客</a></li>
 				<li class="layui-nav-item"><a href="#">待开发</a></li>
 				<li class="layui-nav-item"><a href="#">待开发</a></li>
 			</ul>
@@ -27,92 +28,44 @@
 			</ul>
 		</div>
 
-		<!-- 内容部 -->
+		<!-- 内容部分 -->
 		<div id="contenter" class="layui-body layui-bg-gray" style="left: 0;">
-			<!-- 个人博客列表模块 -->
-
-			<button id="writeBoke" class="writeBoke">写博客</button>
-
-			<div id="allArticleModel">
-				<table id="allArticleTable" class="allArticleTable">
+			<!-- <img src="../lib/backimg.jpg"> -->
+			<!-- 所有文章，列表 模块-->
+			<div id="allArtilceTableDiv" class="allArtilceTableDiv"
+				style="text-align: center; overflow: hidden;">
+				<!-- 博客列表 -->
+				<table id="allArticleTable" class="layui-table" lay-size="lg"
+					lay-even lay-skin="nob" style="text-align: center;">
 					<thead>
 						<tr class="cen">
-							<th>文章编号</th>
-							<th>文章标题</th>
-							<th>操作</th>
+							<th style="text-align: center; font-size: 18px">文章编号</th>
+							<th style="text-align: center; font-size: 18px">文章标题</th>
+							<th style="text-align: center; font-size: 18px">作者编号</th>
 						</tr>
 					</thead>
 					<tbody id="tbodydata">
-					</tbody>
-				</table>
-			</div>
-
-			<!-- 查看具体博客内容模块 -->
-			<!-- 		<div id="articleModel" style="display: none;">
-			文章区
-			<div id="article">
-				<div id="articleName">
-					<h1 id="title">题目:</h1>
-				</div>
-				<div id="articleTextDiv">
-					<textarea id="content" rows="20" cols="60" style="font-size: 15px;"></textarea>
-				</div>
-				<div id="articleOperate">
-					<p id="saveChangeArticleID" style="display: none;"></p>
-					保存查看的博客ID
-					<button id="saveChangeArticle">保存</button>
-					保存修改后的博客
-				</div>
-			</div>
-			<hr> -->
-			<!-- 评论区 -->
-			<!-- 			<div id="articleComment">
-				<h1>评论区</h1>
-				<table id="artComment" class="artComment">
-					<thead>
-						<tr class="cen">
-							<th>评论编号</th>
-							<th>评论内容</th>
-							<th>评论用户id</th>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
 						</tr>
-					</thead>
-					<tbody id="artCommenttbody">
 					</tbody>
 				</table>
+				<hr>
+				<!-- 页面操作 -->
 				<div>
-					<button id="lastCommentPage">上一页</button>
-					<button id="nextCommentPage">下一页</button>
+					<button id="lastArticlePage" class="layui-btn my-btn-primary">上一页</button>
+					<button id="tenPage" class="layui-btn my-btn-primary">换为每页10条</button>
+					<button id="fivePage" class="layui-btn my-btn-primary"
+						style="display: none;">换回每页5条</button>
+					<button id="nextArticlePage" class="layui-btn my-btn-primary">下一页</button>
 				</div>
 			</div>
-		</div> -->
-
-			<!-- 写博客模块 -->
-			<div id="writeAticle" style="display: none;">
-				<!-- 标题区 -->
-				<div>
-					<span style="font-size: 20px">标题：</span>
-					<textarea id="writeTitle" rows="3" cols="40"
-						style="font-size: 5px;"></textarea>
-				</div>
-				<!-- 博客正文区 -->
-				<div>
-					<textarea id="writeContent" rows="20" cols="60"></textarea>
-				</div>
-				<div>
-					<button id="saveArticle">保存</button>
-					<!-- 保存新写的博客 -->
-				</div>
-			</div>
-
-			<!-- 用来保存登录后的userID -->
-			<div style="display: none;">
-				<p id="saveUserID"></p>
-			</div>
-
-
 		</div>
 
 		<!-- 底部 -->
+		<!-- <div id="footer" class="footer"></div> -->
 		<div class="layui-footer" style="left: 0; background-color: #2F4056">
 			<!-- 底部固定区域 -->
 			<div style="margin-left: 20%">
@@ -123,37 +76,23 @@
 	</div>
 
 	<script>
-		//layui的JavaScript代码区域
-		layui.use('element', function(){
-  			var element = layui.element;
-  		});
-		/*---------------------------------------------------------------------分界线-------------------------------------------------------------------------------------
-		---------------------------------------------------------------------------------------------------------------------------------------------------------------
-		----*/
-		
+		/* layui的JavaScript代码区域 */
+		layui.use('element', function() {
+			var element = layui.element;
+		});
+		/*-------------------------------------------------------------------分界线-------------------------------------------------------------------------------------
+		 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+		 ----*/
+
 		/* 个人js区域 */
+		var page = 0;                 //第几条
+		var allArticleTotalCount = 0; //总博客的条数
+		var pageCount = 0;            //总博客的总页数
+		var nowPageCount = 1;         //总博客列表的当前页
+		var pageSize = 5;            //每页显示的数量
 		$(document).ready(function() {
-			
-			/* 主页显示个人博客列表 */
-			$.ajax({
-				type : "GET",
-				url : "http://localhost:8080/sbArticleList",
-				success : function(data) {
-					$.each(data, function(i, item) {
-						//console.log("11111111");
-						$("#tbodydata").append("<tr><td>" + item.articleID + "</td><td><a onclick='articleHide(this)' href='#'>" + item.articleName + "</a></td><td>" + "<input name='deleteBoke' type='button' value='删除' onclick='getTableContent(this)'>"+ "</td></tr>");
-					});
-				},
-			});
-			
-			/* 在页面上存数据,后期要刪掉 */
-			$.ajax({
-				type:"GET",
-				url:"http://localhost:8080/searchUser",
-				success:function(data){
-					$("#saveUserID").append(data);
-				}
-			});
+			//调用获取前5页的方法
+			fiveArticle(page);
 			
 			/* 登录拦截跳转登录页面 */
 			$.ajax({
@@ -170,121 +109,44 @@
 				},
 			});
 			
-		});  /* ready部分结束 */
-		
-		//点击按钮删除博客
-		function getTableContent(node){
-			var tr1 = node.parentNode.parentNode;
-			//alert(tr1.rowIndex);  
-            //alert(tr1.cells[0].innerText);
-            var articleid = tr1.cells[0].innerText;
-           // console.log(articleid);
-            //删除对应博客的评论
-            $.ajax({
-            	type:"GET",
-            	url:"http://localhost:8080/artComment",
-            	data:"articleid="+articleid,
-            	success:function(){
-            		console.log("删除对应评论成功");
-            	}
-            });
-            //删除博客
-            $.ajax({
-            	type:"GET",
-            	url:"http://localhost:8080/sbArticle",
-            	data:"articleid="+articleid,
-            	success : function() {
-					alert("删除成功");
-					location.href = "/html/homePage.html";
-				}
-            });
-		}
-		
-		var page = 0;                 //评论第几条
-		var allCommentTotalCount = 0; //总评论的条数
-		var pageCount = 0;            //总评论的总页数
-		var nowPageCount = 1;         //总评论列表的当前页
-		var pagesize = 5;            //每页显示评论的数量
-		var articleid = 0;
-		
-		//点击，显示文章详情与评论
-		function articleHide(node1){
-			var tr1 = node1.parentNode.parentNode;
-			//alert(tr1.rowIndex);  
-            //alert(tr1.cells[0].innerText);
-            articleid = tr1.cells[0].innerText;
-			//把articleid传到文章详情页
-			$.ajax({
-				type:"GET",
-            	url:"article.html",
-            	data:"articleid="+articleid,
-            	success:function(){
-            		location.href='personalArticle.html?articleid='+articleid;
-            	}
-			});
-			
-			/* $.ajax({
-				type:"GET",
-				url:"http://localhost:8080/article",
-				dataType:"json",
-				data:"articleid="+articleid,
-				success:function(data){
-					$("#title").append(data.articleName);
-					$("#content").append(data.articleContent);
-					$("#saveChangeArticleID").append(articleid);
-				}
-			}); */
-			
-/* 			//获取评论页数
+		});/* ready部分结束 */
+
+		//获取博客表页数
+		$.ajax({
+			type : "GET",
+			url : "http://localhost:8080/artTotalCount",
+			success : function(data) {
+				allArticleTotalCount = data; //获取博客条数
+				pageCount = (allArticleTotalCount + pageSize-1) / pageSize //计算页数
+				//console.log(pageCount);
+				//console.log(pageCount);
+			}
+		});
+
+		//获取前5页博客的方法
+		function fiveArticle(page) {
 			$.ajax({
 				type : "GET",
-				url : "http://localhost:8080/commentTotalCount",
-				data: "articleid=" + articleid,
+				url : "http://localhost:8080/fiveAllArticleList",
+				data : "page=" + page + "&pagesize=" + pageSize,
 				success : function(data) {
-					allCommentTotalCount = data; //获取博客条数
-					pageCount = (allCommentTotalCount + 4) / pagesize //计算页数
-					//console.log(articleid);
-					//console.log(allCommentTotalCount);
-					//console.log(pageCount);
-				}
-			}); */
-					
-			//显示评论
-			//fiveComment(page);
-			 /* $.ajax({
-				type:"GET",
-				url:"http://localhost:8080/searchArticleComment",
-				data:"articleid="+articleid,
-				success:function(data) {
-						$.each(data, function(i, item) {
-							$("#artCommenttbody").append("<tr><td>" + item.userID + "</td><td>" + item.commentID + "</td><td>"+item.commentContent+ "</td></tr>");
-						});
-				}
-			})  */
-		}
-/* 		
-		//获取前5页评论的方法
-		function fiveComment(page) {
-			//console.log(pagesize);
-			$.ajax({
-				type : "GET",
-				url : "http://localhost:8080/fiveCommentList",
-				data : "articleid=" + articleid + "&page=" + page + "&pagesize=" + pagesize,
-				success : function(data) {
-					$("#artCommenttbody").html("");
+					$("#tbodydata").html("");
 					$.each(data, function(i, item) {
-						$("#artCommenttbody").append("<tr><td>" + item.userID + "</td><td>" + item.commentID + "</td><td>"+item.commentContent+ "</td></tr>");
-					});
+						$("#tbodydata").append(
+								"<tr><td>" + item.articleID
+										+ "</td><td><a href='#' onclick='getBokeInfo(this)'>"
+										+ item.articleName + "</a></td><td>"
+										+ item.userID + "</td></tr>");
+					})
 				}
 			});
-		} */
-		
-/* 		
-		//点击翻页下一页评论
-		$("#nextCommentPage").click(function() {
+		}
+
+		//点击翻下一页
+		$("#nextArticlePage").click(function() {
 			if (nowPageCount < parseInt(pageCount)) {
 				nowPageCount++;
-				page = page + pagesize;
+				page = page + pageSize;
 			} else {
 				nowPageCount = 1;
 				page = 0;
@@ -292,75 +154,64 @@
 			//console.log(page);
 			//console.log(nowPageCount);
 			//console.log(pageSize);
-			fiveComment(page);
+			fiveArticle(page);
 		});
-		//点击翻页上一页评论
-		$("#lastCommentPage").click(function() {
+
+		//点击翻上一页
+		$("#lastArticlePage").click(function() {
 			if (nowPageCount > 1) {
 				nowPageCount--;
-				page = page - pagesize;
+				page = page - pageSize;
 			} else {
 				nowPageCount = parseInt(pageCount);
-				page = (nowPageCount - 1) * pagesize;
+				page = (nowPageCount - 1) * pageSize;
 			}
 			//console.log(page);
 			//console.log(nowPageCount);
-			fiveComment(page);
-		}); */
+			fiveArticle(page);
+		});
 		
-		//隐藏文章，返回列表
-		function articleShow(){
-			$("#allArticleModel").show();			
-			$("#articleModel").hide();
-			$("#articleShow").hide();
-			$("#writeAticle").hide();
-			$("#writeBoke").show();
+		//点击变为每页显示10行
+		$("#tenPage").click(function(){
+			$("#fivePage").show();
+			$("#tenPage").hide();
+			nowPageCount = 1
+			page = 0;
+			pageSize = 10;
+			pageCount = (allArticleTotalCount + 4) / pageSize; //重新计算页数
+			fiveArticle(page);
+		});
+		
+		//点击换回每页5行
+		$("#fivePage").click(function(){
+			$("#fivePage").hide();
+			$("#tenPage").show();
+			nowPageCount = 1
+			page = 0;
+			pageSize = 5;
+			pageCount = (allArticleTotalCount + 4) / pageSize; //重新计算页数
+			fiveArticle(page);
+		});
+		
+		
+		//点击博客题目进入详情页
+		function getBokeInfo(node){
+			var tr1 = node.parentNode.parentNode;
+			//alert(tr1.rowIndex);  
+            //alert(tr1.cells[0].innerText);
+            var articleid1 = tr1.cells[0].innerText;
+            var articlename = tr1.cells[1].innerText;
+            //console.log(articlename);
+            $.ajax({
+            	type:"GET",
+            	url:"loggedArticlePage.html",
+            	data:"articleid="+articleid1,
+            	success:function(){
+            		location.href='loggedArticlePage.html?articleid='+articleid1;
+            	}   	
+            });
+            
 		}
-		
-		//跳转写博客页面
-		$("#writeBoke").click(function(){
-			$("#allArticleModel").hide(); //主页列表DIV
-			$("#articleModel").hide();	  //查看博客模块
-			$("#articleShow").show();	  //返回主页list按钮
-			$("#writeAticle").show();	  //写博客DIV
-			$("#writeBoke").hide();       //写博客按钮
-		})
-		
-		/* 写博客模块 */
-		$("#saveArticle").click(function(){
-			var articlename = document.getElementById("writeTitle").value;
-			var articlecontent = document.getElementById("writeContent").value;
-			var userid = $("#saveUserID").html();
-			//console.log(userid);		
-			//console.log(articlename);
-			//console.log(articlecontent);
-		 	$.ajax({
-		 		type:"GET",
-				url:"http://localhost:8080/insertArt",
-				data:"articlename=" + articlename + "&articlecontent=" + articlecontent + "&userid=" + userid,
-				success:function(){
-					alert("添加成功");
-					location.href = "/html/homePage.html";
-				}
-			});  
-		});
-		
-		/* 更新博客模块 */
-		$("#saveChangeArticle").click(function(node2){
-			var articleid = $("#saveChangeArticleID").html();
-			//console.log(articleid);
-			var articlecontent = document.getElementById("content").value;
-			//alert(articlecontent);
-			$.ajax({
-				type:"GET",
-				url:"http://localhost:8080/updateArt",
-				data:"articleid=" + articleid + "&articlecontent=" + articlecontent,
-				success:function(){
-					alert("修改成功");
-					location.href = "/html/homePage.html";
-				}
-			}); 
-		});
 		
 		/* 退出登录 */
 		 $("#loginOutLink").click(function(){
@@ -371,11 +222,16 @@
 					location.href="/html/mainPage.html";
 				}
 			});
-		}); 
+		});
 		
+		//头部logo点击事件
+		$("#logo").click(function() {
+			location.href = "/html/homePage.html";
+		})
 		
-	 		
 	</script>
+
+
 
 </body>
 </html>
