@@ -28,4 +28,8 @@ public class UserService {
 		return userMapper.getUserInformation(userid);
 	}
 
+	/* 更新用户个人资料 */
+	public void updateUserInfo(Integer userid) {
+		
+	}
 }

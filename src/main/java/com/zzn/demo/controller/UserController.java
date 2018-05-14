@@ -37,4 +37,10 @@ public class UserController {
 		return userService.getUserInfo(uid);
 	}
 	
+	/* 更新用户个人资料 */
+	@RequestMapping(value="/updateUserInfo" ,method = RequestMethod.GET)
+	public void updateUserInfo(@RequestParam(value="userid",required = false) Integer userid,HttpSession session) {
+		Integer uid = (Integer)session.getAttribute("userid");
+		userService.updateUserInfo(uid);
+	}
 }

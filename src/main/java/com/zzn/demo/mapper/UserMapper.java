@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.zzn.demo.pojo.User;
 
@@ -25,5 +26,9 @@ public interface UserMapper {
 	// 获取用户个人信息
 	@Select("select UserID,UserName,userMobile,userGender,userAddress,userEmail,userBirthday from User Where UserID=#{userID}")
 	public User getUserInformation(@Param("userID") Integer UserID);
+
+	/* 更新用户个人资料 */
+	@Update("UPDATE User SET UserName =#{userName}, userMobile =#{userMobile},userGender =#{userGender}, userAddress =#{userAddress}, userEmail =#{userEmail}, userBirthday =#{userBirthday} WHERE UserID = #{userID}")
+	public void updateUserInformation(@Param("userName") Integer UserName,@Param("userMobile") Integer userMobile,@Param("userID") Integer UserID);
 
 }
