@@ -136,9 +136,9 @@
 		$("#saveArticle").click(function(){
 			var articlename = document.getElementById("newArticleTitle").value;    //获取相应textarea内的值
 			var articlecontent = document.getElementById("newArticleContent").value;
-			console.log(articleid);
-			console.log(articlename);
-			console.log(articlecontent);
+			//console.log(articleid);
+			//console.log(articlename);
+			//console.log(articlecontent);
 			$.ajax({
 				type:"GET",
 				url:"http://localhost:8080/updateArt",
