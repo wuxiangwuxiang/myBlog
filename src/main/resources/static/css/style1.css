@@ -2,9 +2,9 @@
 /* 登陆页面 */
 #contenter {
 	left: 0;
-	background-image: url(../lib/shuimo4.jpg);
+	background-image: url(../lib/shuimo.jpg);
 	background-repeat: repeat-x;
-	background-size: 100%;
+	background-size: cover;
 }
 
 .logins-div {
