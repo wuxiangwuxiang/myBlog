@@ -28,8 +28,8 @@ public class MyBlogApplication extends WebMvcConfigurerAdapter {
 	public void addInterceptors(InterceptorRegistry registry) {
 		super.addInterceptors(registry);
 		registry.addInterceptor(logInterceptor()).addPathPatterns("/**").excludePathPatterns("/login", "/register",
-				"/loginOut", "/fiveAllArticleList", "/intercept", "/allArticleList", "/artTotalCount", "/article");
-		/* login:登录,register:注册,fiveAllArticleList:获取博客列表（前五页）,intercept:检验session拦截 */
+				"/loginOut", "/fiveAllArticleList", "/intercept","/commentTotalCount","/fiveCommentList","/allArticleList", "/artTotalCount", "/article");
+		/* login:登录,register:注册,fiveAllArticleList:获取博客列表（前五页）,intercept:检验session拦截 ,commentTotalCount:获取评论总条数,fiveCommentList获取评论*/
 
 		// registry.addInterceptor(logInterceptor()).addPathPatterns("/static/**").excludePathPatterns("/login","/register","/allArticleList");
 	}

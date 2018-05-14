@@ -4,9 +4,150 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../layui/layui.js"></script>
+<link type="text/css" rel="stylesheet" href="../layui/css/layui.css">
 <link type="text/css" rel="stylesheet" href="../css/myBlog.css">
 </head>
 <body>
+	<div class="layui-layout layui-layout-admin">
+		<!-- 头部 -->
+		<div class="layui-header layui-bg-cyan">
+			<div id="logo" class="layui-logo">MyBlog</div>
+			<!-- 头部列表区域 -->
+			<ul class="layui-nav layui-layout-left layui-bg-cyan">
+				<li class="layui-nav-item"><a
+					href="http://localhost:8080/html/homePage.html">所有博客</a></li>
+				<li class="layui-nav-item"><a
+					href="http://localhost:8080/html/myArticleListPage.html">个人博客</a></li>
+				<li class="layui-nav-item"><a
+					href="http://localhost:8080/html/writeArticle.html">写博客</a></li>
+				<li class="layui-nav-item"><a href="#">待开发</a></li>
+			</ul>
+			<ul class="layui-nav layui-layout-right layui-bg-cyan">
+				<li class="layui-nav-item"><a id="loginOutLink" href="#">退出登录</a></li>
+			</ul>
+		</div>
 
+		<!-- 内容部 -->
+		<div id="contenter" class="layui-body layui-bg-gray" style="left: 0;">
+			<form class="layui-form" style="background-color: white;">
+				<div class="layui-form-item">
+					<label class="layui-form-label">账号</label>
+					<div class="layui-input-block">
+						<input id="userID" type="text" name="userID" disabled
+							placeholder="请输新的账号" style="background-color: #e2e2e2;"
+							class="layui-input">
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<label class="layui-form-label">昵称</label>
+					<div class="layui-input-block">
+						<input id="userName" type="text" name="userName" required
+							lay-verify="required" placeholder="请输新昵称" autocomplete="off"
+							class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">手机</label>
+					<div class="layui-input-block">
+						<input id="userMobile" type="text" name="userMobile"
+							placeholder="请输新手机号" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">e-mail</label>
+					<div class="layui-input-block">
+						<input id="userEmail" type="text" name="userEmail"
+							placeholder="请输新昵称" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">地址</label>
+					<div class="layui-input-block">
+						<input id="userAddress" type="text" name="userAddress"
+							placeholder="请输新地址" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<label class="layui-form-label">生日</label>
+					<div class="layui-input-block">
+						<input id="userBirthday" type="text" name="userBirthday"
+							placeholder="请输入出生日期" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<label class="layui-form-label">性别</label>
+					<div class="layui-input-block">
+						<input id="userGenderM" type="radio" name="sex" value="男"
+							title="男"> <input id="userGenderF" type="radio"
+							name="sex" value="女" title="女" checked="checked">
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button class="layui-btn my-btn-primary" lay-submit lay-filter="formDemo">立即提交</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<!-- 底部 -->
+		<div class="layui-footer" style="left: 0; background-color: #2F4056">
+			<!-- 底部固定区域 -->
+			<div style="margin-left: 20%">
+				<a href="#" style="color: #e2e2e2">版权巴拉巴拉</a>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		/* layui的JavaScript代码区域 */
+		layui.use([ 'laydate', 'form' ], function() {
+			var laydate = layui.laydate, form = layui.form;
+
+			//执行一个laydate实例
+			laydate.render({
+				elem : '#userBirthday' //指定元素
+			});
+		});
+
+		/*-------------------------------------------------------------------分界线-------------------------------------------------------------------------------------
+		 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+		 ----*/
+
+		/* 个人js区域 */
+		$(document).ready(function() {
+
+			getUserInfo1(); //调用显示个人信息的方法
+		});
+
+		/* 页面初始显示个人信息的方法 */
+		function getUserInfo1() {
+			$.ajax({
+				type : "GET",
+				url : "http://localhost:8080/getUserInfo",
+				success : function(data) {
+					//console.log(data);
+					console.log(data.userID);
+					$("#userID").attr("value", data.userID)
+					$("#userName").attr("value", data.userName);
+					$("#userMobile").attr("value", data.userMobile);
+					$("#userEmail").attr("value", data.userEmail);
+					$("#userAddress").attr("value", data.userAddress);
+					$("#userBirthday").attr("value", data.userBirthday);
+					var userGender = data.userGender;
+					if (userGender == "男") {
+						$("#userGenderM").attr("checked", "checked");
+					} else {
+						$("#userGenderF").attr("checked", "checked");
+					}
+				}
+			});
+		}
+	</script>
 </body>
 </html>

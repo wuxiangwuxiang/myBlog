@@ -1,14 +1,11 @@
 package com.zzn.demo.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.zzn.demo.pojo.Article;
 import com.zzn.demo.pojo.Comment;
 import com.zzn.demo.service.CommentService;
 
@@ -40,10 +37,17 @@ public class CommentController {
 		return list;
 	}
 
-	// 分页，获取博客表总条数
+	// 分页，获取评论表总条数
 	@RequestMapping(value = "/commentTotalCount", method = RequestMethod.GET)
 	public int commentTotalCount(@RequestParam(value = "articleid") Integer articleid) {
 		return commentService.commentTotalCount(articleid);
+	}
+
+	/* 写评论，添加评论 */
+	@RequestMapping(value = "/insertComment", method = RequestMethod.GET)
+	public int insertComment(@RequestParam(value = "commentcontent") String commentcontent,
+			@RequestParam(value = "userid") Integer userid, @RequestParam(value = "articleid") Integer articleid) {
+		return commentService.insertComt(commentcontent, userid, articleid);
 	}
 
 }
