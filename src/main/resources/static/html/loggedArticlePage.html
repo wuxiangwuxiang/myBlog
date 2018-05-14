@@ -201,18 +201,7 @@
 			});
 		});
 		
-		
-		 /* 退出登录 */
-		 $("#loginOutLink").click(function(){
-			$.ajax({
-				type:"GET",
-				url:"http://localhost:8080/loginOut",
-				success:function(){
-					location.href="/html/mainPage.html";
-				}
-			});
-		});
-		
+
 		//头部logo点击事件
 		$("#logo").click(function() {
 			location.href = "/html/homePage.html";

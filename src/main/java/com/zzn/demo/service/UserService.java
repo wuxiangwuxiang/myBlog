@@ -20,7 +20,12 @@ public class UserService {
 	}
 	
 	public Integer searchUser(Integer userid) {
-		return userMapper.getUser2(userid);
+		return userMapper.getUser3(userid);
+	}
+	
+	/* 根据用户id,获取用户个人信息 */
+	public User getUserInfo(Integer userid) {
+		return userMapper.getUserInformation(userid);
 	}
 
 }

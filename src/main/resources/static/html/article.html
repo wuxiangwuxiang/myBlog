@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- 登录前查看博客详情 -->
 <title>查看博客</title>
 <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="../layui/layui.js"></script>
@@ -33,12 +34,42 @@
 				
 			</div> -->
 			
-			<!-- 博客文章区 -->
-			<div class="allArtilceTableDiv" style="background-color: white;width: 730px">
-				<h1 id="bokeTitle" style="font-size: 25px;font-weight: bolder;"></h1>
-				<hr>
-				<textarea id="bokeContent" readonly="readonly" style="width:700px;height:1000px;font-size: 20px;border:none;padding:15px;resize:none;">     </textarea>
+			<div style="position: absolute; margin-left: 9%; width: 1450px; text-align: center; position: absolute; top: 30px">
+				<!-- 博客文章区 -->
+				<div class="ArtilceContentDiv" style="background-color: white; width: 930px; float: right;">
+					<h1 id="bokeTitle" style="font-size: 25px; font-weight: bolder;"></h1>
+					<hr>
+					<textarea id="bokeContent" readonly="readonly" style="width: 900px; height: 1000px; font-size: 18px; border: none; padding: 15px; resize: none">     </textarea>
+					<!-- 写评论,建议放在文章底部随动 -->
+					<div style="background-color: #d2d2d2; width: 800px;">
+						<textarea placeholder="想对作者说点什么" readonly="readonly" style=" background-color:#d2d2d2;border:none;resize: none; width: 500px;"></textarea>
+						<button id="letMeSay" class="layui-btn my-btn-primary">我来说一句</button>
+					</div>
+				</div>
+				
+				<!-- 博客评论区 -->
+				<div id="articleCommentDIV"
+					style="background-color: white; width: 500px; float: left; height: 500px; position: fixed; z-index: 0;">
+					<h1 id="bokeTitle" style="font-size: 25px; font-weight: bolder;">评论区</h1>
+					<table id="artComment" class="layui-table" lay-size="lg" lay-even lay-skin="nob"
+						style="width: 480px; margin: 1% 1%; overflow: hidden; table-layout: fixed; word-wrap: break-word;">
+						<thead>
+							<tr class="cen">
+								<!-- <th>评论编号</th> -->
+								<th>用户id</th>
+								<th>评论内容</th>
+							</tr>
+						</thead>
+						<tbody id="artCommenttbody" style="text-align: left;">
+						</tbody>
+					</table>
+					<div style="position: absolute; left: 30%; bottom: 4%;">
+						<button id="lastCommentPage" class="layui-btn my-btn-primary">上一页</button>
+						<button id="nextCommentPage" class="layui-btn my-btn-primary">下一页</button>
+					</div>
+				</div>
 			</div>
+			
 		</div>
 
 		<!-- 底部 -->
@@ -60,6 +91,13 @@
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 ----*/
 		//个人js区域
+		var page = 0;                 //评论第几条
+		var allCommentTotalCount = 0; //评论的总条数
+		var pageCount = 0;            //评论的总页数
+		var nowPageCount = 1;         //评论列表的当前页
+		var pagesize = 5;             //每页显示评论的数量
+		var articleid = 0;			  //博客ID
+				
 		$(document).ready(function() {	
 			//获取解析所传数据
 			$.getUrlParam = function(name) {
@@ -73,7 +111,7 @@
 				}
 			}
 			//获取articleid
-			var articleid = $.getUrlParam('articleid');
+			articleid = $.getUrlParam('articleid');
 			//console.log(articleid);
 			//把博客内容加载到textarea内
 			$.ajax({
@@ -87,6 +125,72 @@
 					//console.log(data.articleName);
 				}
 			});
+			
+			//获取评论页数
+			$.ajax({
+				type : "GET",
+				url : "http://localhost:8080/commentTotalCount",
+				data: "articleid=" + articleid,
+				success : function(data) {
+					allCommentTotalCount = data; //获取博客条数
+					pageCount = (allCommentTotalCount + 4) / pagesize //计算页数
+					//console.log(articleid);
+					//console.log(allCommentTotalCount);
+					//console.log(pageCount);
+				}
+			});
+			fiveComment(page);
+			
+		});
+		
+		//获取前5页评论的方法
+		function fiveComment(page) {
+			//console.log(articleid);
+			$.ajax({
+				type : "GET",
+				url : "http://localhost:8080/fiveCommentList",
+				data : "articleid=" + articleid + "&page=" + page + "&pagesize=" + pagesize,
+				success : function(data) {
+					$("#artCommenttbody").html("");
+					$.each(data, function(i, item) {
+						$("#artCommenttbody").append("<tr><td>" + item.userID + "</td><td>" +item.commentContent+ "</td></tr>");
+					});
+				}
+			});
+		};
+		
+		//点击翻页下一页评论
+		$("#nextCommentPage").click(function() {
+			if (nowPageCount < parseInt(pageCount)) {
+				nowPageCount++;
+				page = page + pagesize;
+			} else {
+				nowPageCount = 1;
+				page = 0;
+			}
+			//console.log(page);
+			//console.log(nowPageCount);
+			//console.log(pageSize);
+			fiveComment(page);
+		});
+		//点击翻页上一页评论
+		$("#lastCommentPage").click(function() {
+			if (nowPageCount > 1) {
+				nowPageCount--;
+				page = page - pagesize;
+			} else {
+				nowPageCount = parseInt(pageCount);
+				page = (nowPageCount - 1) * pagesize;
+			}
+			//console.log(page);
+			//console.log(nowPageCount);
+			fiveComment(page);
+		});
+		
+		
+		/* 点击添加评论跳转登录 */
+		$("#letMeSay").click(function(){
+			location.href = "/html/logins.html";
 		});
 
 		//头部登录按钮
