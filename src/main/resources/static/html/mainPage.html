@@ -18,36 +18,69 @@
 			<div id="logo" class="layui-logo">MyBlog</div>
 			<!-- 头部区域（可配合layui已有的水平导航） -->
 			<ul class="layui-nav layui-layout-left layui-bg-cyan">
-				<li class="layui-nav-item layui-this"><a href="http://localhost:8080/html/mainPage.html">博客</a></li>
-				<li class="layui-nav-item"><a href="http://localhost:8080/html/logins.html">写博客</a></li>
+				<li class="layui-nav-item layui-this"><a
+					href="http://localhost:8080/html/mainPage.html">博客</a></li>
+				<li class="layui-nav-item"><a
+					href="http://localhost:8080/html/logins.html">写博客</a></li>
 				<li class="layui-nav-item"><a href="#">待开发</a></li>
 				<li class="layui-nav-item"><a href="#">待开发</a></li>
 			</ul>
 			<ul class="layui-nav layui-layout-right layui-bg-cyan">
-				<!-- <li class="layui-nav-item"><a href="javascript:;"> <img
-						src="http://t.cn/RCzsdCq" class="layui-nav-img"> 贤心
-				</a>
-					<dl class="layui-nav-child">
-						<dd>
-							<a href="">基本资料</a>
-						</dd>
-						<dd>
-							<a href="">安全设置</a>
-						</dd>
-					</dl></li> -->
+
 				<li class="layui-nav-item"><a id="signBtn" href="#">登录</a></li>
 			</ul>
 		</div>
 
 
 		<!-- 内容部分 -->
-		<div id="contenter" class="layui-body layui-bg-gray" style="left: 0;">
+		<div id="contenter" class="layui-body layui-bg-gray"
+			style="left: 0; background-image: url('../lib/shuimo6.jpg'); background-size: cover;">
+
+			<!-- 侧方导航栏 -->
+			<div id="tree-side">
+
+				<ul class="layui-nav layui-nav-tree layui-nav-side"
+					style="margin-top: 60px; width: 220px; height: 86.5%;text-align: center;background-color: #2F4056;">
+					<li class="layui-nav-item layui-nav-itemed" ><a
+						href="javascript:;">技术支持</a>
+						<dl class="layui-nav-child" > 
+							<dd>
+								<a href="javascript:;" >Java入门</a>
+							</dd>
+							<dd>
+								<a href="javascript:;">.Net入门</a>
+							</dd>
+							<dd>
+								<a href="javascript:;">PHP入门</a>
+							</dd>
+						</dl></li>
+					<li class="layui-nav-item layui-nav-itemed" ><a
+						href="javascript:;">经验交流</a>
+						<dl class="layui-nav-child" >
+							<dd>
+								<a href="javascript:;">云计算</a>
+							</dd>
+							<dd>
+								<a href="javascript:;">数据库</a>
+							</dd>
+							<dd>
+								<a href="javascript:;">区块链</a>
+							</dd>
+						</dl></li>
+					<li class="layui-nav-item" ><a href="">游戏开发</a></li>
+					<li class="layui-nav-item" ><a href="">人工智能</a></li>
+				</ul>
+
+			</div>
+
+
 			<!-- <img src="../lib/backimg.jpg"> -->
 			<!-- 所有文章，列表 模块-->
 			<div id="allArtilceTableDiv" class="allArtilceTableDiv"
-				style="text-align: center; overflow: hidden;">
+				style="text-align: center; overflow: hidden; width: 1080px;margin-left: -120px;margin-top: -30px;">
 				<!-- 博客列表 -->
-				<table id="allArticleTable" class="layui-table" lay-size="lg" lay-even lay-skin="nob" style="text-align: center;">
+				<table id="allArticleTable" class="layui-table" lay-size="lg"
+					lay-even lay-skin="nob" style="text-align: center; width: 1080px;">
 					<thead>
 						<tr class="cen">
 							<th style="text-align: center; font-size: 18px">文章编号</th>
@@ -80,7 +113,14 @@
 		<div class="layui-footer" style="left: 0; background-color: #2F4056">
 			<!-- 底部固定区域 -->
 			<div style="margin-left: 20%">
-				<a href="#" style="color: #e2e2e2">版权巴拉巴拉</a>
+				<label> <a href="#"
+					style="color: #e2e2e2; margin-left: 300px;">© 2018 myBlog.com</a>
+					&nbsp; <a href="#" style="color: #e2e2e2">微信公众号</a> &nbsp; <a
+					href="#" style="color: #e2e2e2">案例</a> &nbsp; <a href="#"
+					style="color: #e2e2e2">支持</a> &nbsp; <a href="#"
+					style="color: #e2e2e2">联系</a> &nbsp; <a href="https://github.com/"
+					target="_blank" style="color: #e2e2e2">GitHub</a>
+				</label>
 			</div>
 		</div>
 	</div>
