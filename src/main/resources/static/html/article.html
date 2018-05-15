@@ -28,28 +28,29 @@
 		</div>
 
 		<!-- 内容部 -->
-		<div id="contenter" class="layui-body layui-bg-gray" style="left: 0;">
+		<div id="contenter" class="layui-body layui-bg-gray" style="left: 0; background-image: url('../lib/wenli3.jpg');	background-repeat: repeat-x;
+	background-size: cover;" >
 			<!-- 博客作者简介区 -->
 			<!-- <div>
 				
 			</div> -->
 			
-			<div style="position: absolute; margin-left: 9%; width: 1450px; text-align: center; position: absolute; top: 30px">
+			<div style="position: absolute; margin-left: 9%; width: 1450px; text-align: center; position: absolute; top: 30px;">
 				<!-- 博客文章区 -->
-				<div class="ArtilceContentDiv" style="background-color: white; width: 930px; float: right;">
+				<div class="ArtilceContentDiv" style="background-color: white; width: 930px; float: right;border-radius: 16px;">
 					<h1 id="bokeTitle" style="font-size: 25px; font-weight: bolder;"></h1>
 					<hr>
 					<textarea id="bokeContent" readonly="readonly" style="width: 900px; height: 1000px; font-size: 18px; border: none; padding: 15px; resize: none">     </textarea>
 					<!-- 写评论,建议放在文章底部随动 -->
-					<div style="background-color: #d2d2d2; width: 800px;">
-						<textarea placeholder="想对作者说点什么" readonly="readonly" style=" background-color:#d2d2d2;border:none;resize: none; width: 500px;"></textarea>
-						<button id="letMeSay" class="layui-btn my-btn-primary">我来说一句</button>
+					<div style="background-color: #d2d2d2; width: 930px; position:fixed;bottom: 44px;">
+						<h3 style="margin-left: -165px;color: black;padding-top: 20px;">想对作者说点什么？</h3>
+						<button id="letMeSay" class="layui-btn my-btn-primary" style="margin-top:-42px; margin-left: 120px; text-align: center;" >我来说一句</button>
 					</div>
 				</div>
 				
 				<!-- 博客评论区 -->
 				<div id="articleCommentDIV"
-					style="background-color: white; width: 500px; float: left; height: 500px; position: fixed; z-index: 0;">
+					style="background-color: white; width: 500px; float: left; height: 500px; position: fixed; z-index: 0; border-radius: 16px;">
 					<h1 id="bokeTitle" style="font-size: 25px; font-weight: bolder;">评论区</h1>
 					<table id="artComment" class="layui-table" lay-size="lg" lay-even lay-skin="nob"
 						style="width: 480px; margin: 1% 1%; overflow: hidden; table-layout: fixed; word-wrap: break-word;">
@@ -76,7 +77,14 @@
 		<div class="layui-footer" style="left: 0; background-color: #2F4056">
 			<!-- 底部固定区域 -->
 			<div style="margin-left: 20%">
-				<a href="#" style="color: #e2e2e2">版权巴拉巴拉</a>
+				<label> <a href="#"
+					style="color: #e2e2e2; margin-left: 370px;">© 2018 myBlog.com</a>
+					&nbsp; <a href="#" style="color: #e2e2e2">微信公众号</a> &nbsp; <a
+					href="#" style="color: #e2e2e2">案例</a> &nbsp; <a href="#"
+					style="color: #e2e2e2">支持</a> &nbsp; <a href="#"
+					style="color: #e2e2e2">联系</a> &nbsp; <a href="https://github.com/"
+					target="_blank" style="color: #e2e2e2">GitHub</a>
+				</label>
 			</div>
 		</div>
 

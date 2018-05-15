@@ -40,12 +40,12 @@
 			<div id="tree-side">
 
 				<ul class="layui-nav layui-nav-tree layui-nav-side"
-					style="margin-top: 60px; width: 220px; height: 86.5%;text-align: center;background-color: #2F4056;">
-					<li class="layui-nav-item layui-nav-itemed" ><a
+					style="margin-top: 60px; width: 220px; height: 89.3%; text-align: center; background-color: #2F4056;">
+					<li class="layui-nav-item layui-nav-itemed"><a
 						href="javascript:;">技术支持</a>
-						<dl class="layui-nav-child" > 
+						<dl class="layui-nav-child">
 							<dd>
-								<a href="javascript:;" >Java入门</a>
+								<a href="javascript:;">Java入门</a>
 							</dd>
 							<dd>
 								<a href="javascript:;">.Net入门</a>
@@ -54,9 +54,9 @@
 								<a href="javascript:;">PHP入门</a>
 							</dd>
 						</dl></li>
-					<li class="layui-nav-item layui-nav-itemed" ><a
+					<li class="layui-nav-item layui-nav-itemed"><a
 						href="javascript:;">经验交流</a>
-						<dl class="layui-nav-child" >
+						<dl class="layui-nav-child">
 							<dd>
 								<a href="javascript:;">云计算</a>
 							</dd>
@@ -67,20 +67,38 @@
 								<a href="javascript:;">区块链</a>
 							</dd>
 						</dl></li>
-					<li class="layui-nav-item" ><a href="">游戏开发</a></li>
-					<li class="layui-nav-item" ><a href="">人工智能</a></li>
+					<li class="layui-nav-item"><a href="">游戏开发</a></li>
+					<li class="layui-nav-item"><a href="">人工智能</a></li>
 				</ul>
 
 			</div>
-
-
+			<!-- 轮动新闻图片 -->
+			<div class="layui-carousel" id="test1" style="margin-left: 220px;">
+				<div carousel-item>
+					<div>
+						<img src="../lib/daohang1.jpg" style="background-repeat: repeat-x;background-size: cover;">
+					</div>
+					<div>
+						<img src="../lib/daohang2.jpg">
+					</div>
+					<div>
+						<img src="../lib/daohang4.jpg">
+					</div>
+					<div>
+						<img src="../lib/daohang3.jpg">
+					</div>
+					<div>
+						<img src="../lib/daohang5.jpg">
+					</div>
+				</div>
+			</div>
 			<!-- <img src="../lib/backimg.jpg"> -->
 			<!-- 所有文章，列表 模块-->
 			<div id="allArtilceTableDiv" class="allArtilceTableDiv"
-				style="text-align: center; overflow: hidden; width: 1080px;margin-left: -120px;margin-top: -30px;">
+				style="text-align: center; overflow: hidden; width: 1400px; margin-left: -180px; margin-top: 500px;">
 				<!-- 博客列表 -->
 				<table id="allArticleTable" class="layui-table" lay-size="lg"
-					lay-even lay-skin="nob" style="text-align: center; width: 1080px;">
+					lay-even lay-skin="nob" style="text-align: center; width: 1400px;">
 					<thead>
 						<tr class="cen">
 							<th style="text-align: center; font-size: 18px">文章编号</th>
@@ -114,7 +132,7 @@
 			<!-- 底部固定区域 -->
 			<div style="margin-left: 20%">
 				<label> <a href="#"
-					style="color: #e2e2e2; margin-left: 300px;">© 2018 myBlog.com</a>
+					style="color: #e2e2e2; margin-left: 370px;">© 2018 myBlog.com</a>
 					&nbsp; <a href="#" style="color: #e2e2e2">微信公众号</a> &nbsp; <a
 					href="#" style="color: #e2e2e2">案例</a> &nbsp; <a href="#"
 					style="color: #e2e2e2">支持</a> &nbsp; <a href="#"
@@ -254,6 +272,18 @@
 			location.href = "/html/mainPage.html";
 		})
 	</script>
-
+	<script>
+layui.use('carousel', function(){
+  var carousel = layui.carousel;
+  //建造实例
+  carousel.render({
+    elem: '#test1'
+    ,width: '88.5%' //设置容器宽度
+    ,height:'60%' //设置容器高度
+    ,arrow: 'always'//始终显示箭头
+    //,anim: 'updown' //切换动画方式
+  });
+});
+</script>
 </body>
 </html>
