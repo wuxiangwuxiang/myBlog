@@ -63,6 +63,16 @@
 						<button id="nextCommentPage" class="layui-btn my-btn-primary">下一页</button>
 					</div>
 				</div>
+				
+				<!-- 写评论区 -->
+				<div class="layui-form-item layui-form-text" style="background-color: white;width: 930px;position: fixed;">
+					<div class="layui-input-block">
+      					<textarea id="writeCommentArea" name="desc" placeholder="想对作者说点什么" class="layui-textarea my-textarea" style="border:1px solid #d2d2d2; height:35px; "></textarea>
+    				</div>
+    				<div>
+    					<button class="layui-btn my-btn-primary">发表评论</button>
+    				</div>
+    			</div>
 			</div>
 		</div>
 
@@ -189,9 +199,18 @@
 			fiveComment(page);
 		});
 		
+		/* 评论文本域获得焦点事件 */
+		$("#writeCommentArea").focus(function(){
+			$("#writeCommentArea").css("height","70px")
+		});
+		/* 评论文本域失去焦点事件 */
+		$("#writeCommentArea").blur(function(){
+			$("#writeCommentArea").css("height","35px")
+		});
+		
 
 		/* 退出登录 */
-		 $("#loginOutLink").click(function(){
+		$("#loginOutLink").click(function(){
 			$.ajax({
 				type:"GET",
 				url:"http://localhost:8080/loginOut",
