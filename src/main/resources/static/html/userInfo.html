@@ -24,7 +24,17 @@
 				<li class="layui-nav-item"><a href="#">待开发</a></li>
 			</ul>
 			<ul class="layui-nav layui-layout-right layui-bg-cyan">
-				<li class="layui-nav-item"><a id="loginOutLink" href="#">退出登录</a></li>
+				<li class="layui-nav-item">
+    				<a href="">个人中心<span class="layui-badge-dot"></span></a>
+  				</li>
+  				<li class="layui-nav-item" lay-unselect="">
+    				<a href="javascript:;"><img src="http://t.cn/RCzsdCq" class="layui-nav-img">我</a>
+   					<dl class="layui-nav-child">
+      					<dd><a id="changePersonalInfo" href="#">修改信息</a></dd>
+      					<!-- <dd><a href="javascript:;">安全管理</a></dd> -->
+      					<dd><a id="loginOutLink" href="#">退出登录</a></dd>
+    				</dl>
+  				</li>
 			</ul>
 		</div>
 
@@ -91,7 +101,7 @@
 					<div class="layui-input-block">
 						<button id="savePersonalInfo" class="layui-btn my-btn-primary"
 							lay-submit lay-filter="formDemo">立即保存</button>
-						<button class="layui-btn my-btn-primary">返回主页</button>
+						<button id="backHomePage" class="layui-btn my-btn-primary">返回主页</button>
 					</div>
 				</div>
 			</form>
@@ -113,8 +123,8 @@
 
 	<script>
 		/* layui的JavaScript代码区域 */
-		layui.use([ 'laydate', 'form' ], function() {
-			var laydate = layui.laydate, form = layui.form;
+		layui.use([ 'laydate', 'form','layer','element' ], function() {
+			var laydate = layui.laydate, form = layui.form, layer = layui.layer,element = layui.element;
 			//执行一个laydate实例
 			laydate.render({
 				elem : '#userBirthday' //指定元素
@@ -127,7 +137,6 @@
 
 		/* 个人js区域 */
 		$(document).ready(function() {
-
 			getUserInfo1(); //调用显示个人信息的方法
 		});
 
@@ -149,25 +158,62 @@
 					if (userGender == "男") {
 						$("#userGenderM").attr("checked", "checked");
 						$("#userGenderF").removeAttr("checked");
-					} else {
+						//console.log(data.userGender);
+					} else if(userGender == "女"){
 						$("#userGenderF").attr("checked", "checked");
+						$("#userGenderM").removeAttr("checked");
+					}else{
+						$("#userGenderF").removeAttr("checked");
 						$("#userGenderM").removeAttr("checked");
 					}
 				}
 			});
-		}
+		};
 
 		/* 点击保存按钮,保存个人信息 */
 		$("#savePersonalInfo").click(function() {
-			var articleName = document.getElementById("userName").value;    //获取相应输入框内的值
+			var userName = document.getElementById("userName").value;    //获取相应输入框内的值
 			var userMobile = document.getElementById("userMobile").value;
 			var userEmail = document.getElementById("userEmail").value;
 			var userAddress = document.getElementById("userAddress").value;
 			var userBirthday = document.getElementById("userBirthday").value;
 			var userGender = $("input[name='sex']:checked").val();   //获取单选框选中为checked的值
-			//console.log(userGender);
+			console.log(userGender);
+			$.ajax({
+				type:"GET",
+				url:"http://localhost:8080/updateUserInfo",
+				data:"username="+userName+"&usermobile="+userMobile+"&useremail="+userEmail+"&useraddress="+userAddress+"&usergender="+userGender+"&userbirthday="+userBirthday,
+				success:function(){
+					layer.msg('修改成功');
+				},
+			});
 			
-			
+		});
+		
+		/* 返回主页homePage按钮 */
+		$("#backHomePage").click(function(){
+			location.href = "/html/homePage.html";
+		});
+		
+		/* 退出登录 */
+		$("#loginOutLink").click(function() {
+			$.ajax({
+				type : "GET",
+				url : "http://localhost:8080/loginOut",
+				success : function() {
+					location.href = "/html/mainPage.html";
+				}
+			});
+		});
+
+		/* 跳转修改信息页面 */
+		$("#changePersonalInfo").click(function(){
+			location.href = "/html/userInfo.html"
+		});
+		
+		//头部logo点击事件
+		$("#logo").click(function() {
+			location.href = "/html/homePage.html";
 		});
 	</script>
 </body>

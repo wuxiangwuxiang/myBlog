@@ -17,15 +17,24 @@
 			<div id="logo" class="layui-logo">MyBlog</div>
 			<!-- 头部列表区域 -->
 			<ul class="layui-nav layui-layout-left layui-bg-cyan">
+				<li class="layui-nav-item"><a href="http://localhost:8080/html/homePage.html">所有博客</a></li>
 				<li class="layui-nav-item"><a
 					href="http://localhost:8080/html/myArticleListPage.html">个人博客</a></li>
-				<li class="layui-nav-item"><a
-					href="http://localhost:8080/html/writeArticle.html">写博客</a></li>
-				<li class="layui-nav-item"><a href="#">待开发</a></li>
+				<li class="layui-nav-item layui-this"><a href="http://localhost:8080/html/writeArticle.html">写博客</a></li>
 				<li class="layui-nav-item"><a href="#">待开发</a></li>
 			</ul>
 			<ul class="layui-nav layui-layout-right layui-bg-cyan">
-				<li class="layui-nav-item"><a id="loginOutLink" href="#">退出登录</a></li>
+				<li class="layui-nav-item">
+    				<a href="">个人中心<span class="layui-badge-dot"></span></a>
+  				</li>
+  				<li class="layui-nav-item" lay-unselect="">
+    				<a href="javascript:;"><img src="http://t.cn/RCzsdCq" class="layui-nav-img">我</a>
+   					<dl class="layui-nav-child">
+      					<dd><a id="changePersonalInfo" href="#">修改信息</a></dd>
+      					<!-- <dd><a href="javascript:;">安全管理</a></dd> -->
+      					<dd><a id="loginOutLink" href="#">退出登录</a></dd>
+    				</dl>
+  				</li>
 			</ul>
 		</div>
 
@@ -168,6 +177,11 @@
 			});
 		});
 
+		/* 跳转修改信息页面 */
+		$("#changePersonalInfo").click(function(){
+			location.href = "/html/userInfo.html"
+		});
+		
 		//头部logo点击事件
 		$("#logo").click(function() {
 			location.href = "/html/homePage.html";

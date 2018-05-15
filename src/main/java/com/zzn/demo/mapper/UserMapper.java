@@ -1,5 +1,7 @@
 package com.zzn.demo.mapper;
 
+import java.sql.Date;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -29,6 +31,9 @@ public interface UserMapper {
 
 	/* 更新用户个人资料 */
 	@Update("UPDATE User SET UserName =#{userName}, userMobile =#{userMobile},userGender =#{userGender}, userAddress =#{userAddress}, userEmail =#{userEmail}, userBirthday =#{userBirthday} WHERE UserID = #{userID}")
-	public void updateUserInformation(@Param("userName") Integer UserName,@Param("userMobile") Integer userMobile,@Param("userID") Integer UserID);
+	public void updateUserInformation(@Param("userName") String UserName, @Param("userMobile") String userMobile,
+			@Param("userGender") String userGender, @Param("userAddress") String userAddress,
+			@Param("userEmail") String userEmail, @Param("userBirthday") Date userBirthday,
+			@Param("userID") Integer UserID);
 
 }
