@@ -43,7 +43,7 @@
 
 		<!-- 内容部 -->
 		<div id="contenter" class="layui-body layui-bg-gray" style="left: 0;background-image: url('../lib/wenli1.jpg');background-repeat: no-repeat;background-size: cover;">
-			<form class="layui-form" action="" target="nm_iframe"
+			<form id="personInfoForm" class="layui-form" action="" target="nm_iframe"
 				style="background-color: white;margin: 100px auto;width: 600px;height: 600px; border-radius: 16px;border:3px #888887 solid;box-shadow: 10px 10px 5px #888888; ">
 				
 				<div class="layui-form-item" style="margin-top: 25px;padding-top: 25px;">
@@ -160,6 +160,7 @@
 				success : function(data) {
 					//console.log(data);
 					//console.log(data.userID);
+					document.getElementById("personInfoForm").reset();  //form恢复默认值(清理缓存,解决性别单选框刷新不变问题)
 					$("#userID").attr("value", data.userID)
 					$("#userName").attr("value", data.userName);
 					$("#userMobile").attr("value", data.userMobile);
