@@ -69,8 +69,8 @@
 					<div class="layui-input-block">
       					<textarea id="writeCommentArea" name="desc" placeholder="想对作者说点什么" class="layui-textarea my-textarea" style="border:1px solid #d2d2d2; height:35px; "></textarea>
     				</div>
-    				<div>
-    					<button class="layui-btn my-btn-primary">发表评论</button>
+    				<div id="subCommentDIV" style="display: none;">
+    					<button id="subCommentbtn" class="layui-btn my-btn-primary">发表评论</button>
     				</div>
     			</div>
 			</div>
@@ -201,13 +201,25 @@
 		
 		/* 评论文本域获得焦点事件 */
 		$("#writeCommentArea").focus(function(){
-			$("#writeCommentArea").css("height","70px")
+			$("#writeCommentArea").css("height","70px");
+			$("#subCommentDIV").show();
 		});
 		/* 评论文本域失去焦点事件 */
 		$("#writeCommentArea").blur(function(){
 			$("#writeCommentArea").css("height","35px")
+			$("#subCommentDIV").hide();
 		});
 		
+		/* 提交评论 */
+		$("#subCommentbtn").click(function(){
+			var commentContent = document.getElementById("writeCommentArea").value;
+			console.log(commentContent);
+			$.ajax({
+				type:"GET",
+				url:"http://localhost:8080/insertComment",
+			});
+			
+		});
 
 		/* 退出登录 */
 		$("#loginOutLink").click(function(){

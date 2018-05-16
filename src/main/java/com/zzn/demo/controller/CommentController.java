@@ -1,6 +1,9 @@
 package com.zzn.demo.controller;
 
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -46,8 +49,11 @@ public class CommentController {
 	/* 写评论，添加评论 */
 	@RequestMapping(value = "/insertComment", method = RequestMethod.GET)
 	public int insertComment(@RequestParam(value = "commentcontent") String commentcontent,
-			@RequestParam(value = "userid") Integer userid, @RequestParam(value = "articleid") Integer articleid) {
-		return commentService.insertComt(commentcontent, userid, articleid);
+			@RequestParam(value = "userid") Integer userid, @RequestParam(value = "articleid") Integer articleid, HttpSession session) {
+		System.out.println(session.getAttribute("userid"));
+		Integer uid = (Integer) session.getAttribute("userid");
+		System.out.println(session.getAttribute("userid"));
+		return commentService.insertComt(commentcontent, uid, articleid);
 	}
 
 }
