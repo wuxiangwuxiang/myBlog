@@ -15,16 +15,30 @@
 		<div class="layui-header layui-bg-cyan">
 			<div id="logo" class="layui-logo">MyBlog</div>
 			<!-- 头部区域（可配合layui已有的水平导航） -->
-			<ul class="layui-nav layui-layout-left">
-				<li class="layui-nav-item"><a
-					href="http://localhost:8080/html/myArticleListPage.html">个人博客</a></li>
-				<li class="layui-nav-item"><a href="http://localhost:8080/html/writeArticle.html">写博客</a></li>
+			<ul class="layui-nav layui-layout-left layui-bg-cyan">
 				<li class="layui-nav-item"><a
 					href="http://localhost:8080/html/homePage.html">所有博客</a></li>
+				<li class="layui-nav-item"><a
+					href="http://localhost:8080/html/myArticleListPage.html">个人博客</a></li>
+				<li class="layui-nav-item"><a
+					href="http://localhost:8080/html/writeArticle.html">写博客</a></li>
 				<li class="layui-nav-item"><a href="#">待开发</a></li>
 			</ul>
-			<ul class="layui-nav layui-layout-right">
-				<li class="layui-nav-item"><a id="loginOutLink" href="#">退出登录</a></li>
+			<ul class="layui-nav layui-layout-right layui-bg-cyan">
+				<li class="layui-nav-item"><a href="">个人中心<span
+						class="layui-badge-dot"></span></a></li>
+				<li class="layui-nav-item" lay-unselect=""><a
+					href="javascript:;"><img src="http://t.cn/RCzsdCq"
+						class="layui-nav-img">我</a>
+					<dl class="layui-nav-child">
+						<dd>
+							<a id="changePersonalInfo" href="#">修改信息</a>
+						</dd>
+						<!-- <dd><a href="javascript:;">安全管理</a></dd> -->
+						<dd>
+							<a id="loginOutLink" href="#">退出登录</a>
+						</dd>
+					</dl></li>
 			</ul>
 		</div>
 
@@ -90,8 +104,8 @@
 
 	<script>
 		//layui的JavaScript代码区域
-		layui.use('element', function() {
-			var element = layui.element;
+		layui.use(['element','layer'], function() {
+			var element = layui.element , layer = layui.layer;
 		});
 
 		/*-------------------------------------------------------------------分界线-------------------------------------------------------------------------------------
@@ -204,11 +218,6 @@
 			$("#writeCommentArea").css("height","70px");
 			$("#subCommentDIV").show();
 		});
-		/* 评论文本域失去焦点事件 */
-		$("#writeCommentArea").blur(function(){
-			$("#writeCommentArea").css("height","35px")
-			$("#subCommentDIV").hide();
-		});
 		
 		/* 提交评论 */
 		$("#subCommentbtn").click(function(){
@@ -217,26 +226,36 @@
 			$.ajax({
 				type:"GET",
 				url:"http://localhost:8080/insertComment",
-			});
-			
-		});
-
-		/* 退出登录 */
-		$("#loginOutLink").click(function(){
-			$.ajax({
-				type:"GET",
-				url:"http://localhost:8080/loginOut",
+				data:"commentcontent="+commentContent+"&articleid="+articleid,
 				success:function(){
-					location.href="/html/mainPage.html";
+					layer.msg('评论成功');
+					$("#writeCommentArea").val('');	
+					$("#writeCommentArea").css("height","35px");
+					$("#subCommentDIV").hide();
+				},
+			});
+		});
+	
+		/* 退出登录 */
+		$("#loginOutLink").click(function() {
+			$.ajax({
+				type : "GET",
+				url : "http://localhost:8080/loginOut",
+				success : function() {
+					location.href = "/html/mainPage.html";
 				}
 			});
 		});
-		
+
+		/* 跳转修改信息页面 */
+		$("#changePersonalInfo").click(function() {
+			location.href = "/html/userInfo.html"
+		});
 
 		//头部logo点击事件
 		$("#logo").click(function() {
 			location.href = "/html/homePage.html";
-		})
+		});
 	</script>
 </body>
 </html>
