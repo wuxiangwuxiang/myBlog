@@ -41,4 +41,9 @@ public class CommentService {
 	public int insertComt(String commentcontent,Integer userid,Integer articleid) {
 		return commentMapper.insertComment(commentcontent, userid, articleid);
 	}
+	
+	/* 根据commentID删除评论 */
+	public void deleteCmtByid(Integer CommentID) {
+		commentMapper.deleteCommentByID(CommentID);
+	}
 }

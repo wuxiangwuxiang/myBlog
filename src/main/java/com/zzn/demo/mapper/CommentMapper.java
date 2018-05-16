@@ -33,4 +33,8 @@ public interface CommentMapper {
 	@Insert("insert into Comment (CommentContent,UserID,ArticleID) values (#{CommentContent},#{UserID},#{ArticleID})")
 	public int insertComment(@Param("CommentContent") String commentcontent, @Param("UserID") Integer userid,
 			@Param("ArticleID") Integer articleid);
+	
+	/* 根据commentID删除评论 */
+	@Delete("delete from Comment where CommentID = #{CommentID}")
+	public void deleteCommentByID(@Param("CommentID") Integer CommentID);
 }

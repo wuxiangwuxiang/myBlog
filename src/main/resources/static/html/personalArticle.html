@@ -18,9 +18,11 @@
 			<!-- 头部区域（可配合layui已有的水平导航） -->
 			<ul class="layui-nav layui-layout-left">
 				<li class="layui-nav-item"><a
+					href="http://localhost:8080/html/homePage.html">所有博客</a></li>
+				<li class="layui-nav-item"><a
 					href="http://localhost:8080/html/myArticleListPage.html">个人博客</a></li>
-				<li class="layui-nav-item"><a href="http://localhost:8080/html/writeArticle.html">写博客</a></li>
-				<li class="layui-nav-item"><a href="http://localhost:8080/html/homePage.html">所有博客</a></li>
+				<li class="layui-nav-item"><a
+					href="http://localhost:8080/html/writeArticle.html">写博客</a></li>
 				<li class="layui-nav-item"><a href="#">待开发</a></li>
 			</ul>
 			<ul class="layui-nav layui-layout-right">
@@ -31,25 +33,30 @@
 		<!-- 内容部 -->
 		<div id="contenter" class="layui-body layui-bg-gray" style="left: 0;">
 			<div
-				style="position: absolute; margin-left: 9%; width: 1450px; text-align: center; position: absolute; top: 30px">
+				style="position: absolute; margin-left: 9%; width: 1500px; text-align: center; position: absolute; top: 30px">
 				<!-- 博客文章区 -->
 				<div class="ArtilceContentDiv"
 					style="background-color: white; width: 930px; float: right;">
 					<h1 id="bokeTitle" style="font-size: 25px; font-weight: bolder;"></h1>
 					<hr>
 					<textarea id="bokeContent" readonly="readonly"
-						style="width: 900px; height: 1000px; font-size: 18px; border: none; padding: 15px;resize:none">     </textarea>
+						style="width: 900px; height: 1000px; font-size: 18px; border: none; padding: 15px; resize: none">     </textarea>
 				</div>
 
 				<!-- 博客评论区 -->
-				<div id="articleCommentDIV" style="background-color: white; width: 500px; float: left; height: 500px; position: fixed; z-index: 0;">
+				<div id="articleCommentDIV"
+					style="background-color: white; width: 550px; float: left; height: 500px; position: fixed; z-index: 0;">
 					<h1 id="bokeTitle" style="font-size: 25px; font-weight: bolder;">评论区</h1>
-					<table id="artComment" class="layui-table" lay-size="lg" lay-even lay-skin="nob" style="width: 480px; margin: 1% 1%; overflow: hidden; table-layout: fixed; word-wrap: break-word;">
+					<table id="artComment" class="layui-table" lay-size="lg" lay-even
+						lay-skin="nob"
+						style="width: 530px; margin: 1% 1%; overflow: hidden; table-layout: fixed; word-wrap: break-word;">
 						<thead>
 							<tr class="cen">
 								<!-- <th>评论编号</th> -->
-								<th>用户id</th>
+								<th style="width:42px;">评论id</th>
+								<th style="width:42px;">用户id</th>
 								<th>评论内容</th>
+								<th style="width:40px;">操作</th>
 							</tr>
 						</thead>
 						<tbody id="artCommenttbody" style="text-align: left;">
@@ -150,7 +157,7 @@
 				success : function(data) {
 					$("#artCommenttbody").html("");
 					$.each(data, function(i, item) {
-						$("#artCommenttbody").append("<tr><td>" + item.userID + "</td><td>" +item.commentContent+ "</td></tr>");
+						$("#artCommenttbody").append("<tr><td>" +item.commentID +"</td><td>"+item.userID + "</td><td>" +item.commentContent+ "</td><td>" + "<input name='deleteComment' type='button' value='删除' onclick='getTableContent(this)' class='layui-btn my-btn-primary layui-btn-sm'>"+ "</td></tr>");
 					});
 				}
 			});
@@ -184,6 +191,24 @@
 			fiveComment(page);
 		});
 		
+		//点击按钮删除评论
+		function getTableContent(node){
+			var tr1 = node.parentNode.parentNode;
+			//alert(tr1.rowIndex);  
+            //alert(tr1.cells[0].innerText);
+            var commentid = tr1.cells[0].innerText;
+           // console.log(articleid);
+            //删除对应的评论
+            $.ajax({
+            	type:"GET",
+            	url:"http://localhost:8080/deleteCommentByid",
+            	data:"CommentID="+commentid,
+            	success:function(){
+            		fiveComment(page)
+            		//console.log("删除对应评论成功");
+            	}
+            });
+		}
 		
 
 		/* 退出登录 */

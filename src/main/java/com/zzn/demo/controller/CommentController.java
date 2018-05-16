@@ -55,5 +55,11 @@ public class CommentController {
 		//System.out.println(userid+commentcontent+articleid);
 		return commentService.insertComt(commentcontent, userid, articleid);
 	}
+	
+	/* 根据commentID删除评论 */
+	@RequestMapping(value = "/deleteCommentByid" ,method = RequestMethod.GET)
+	public void deleteCommentByid(@RequestParam(value = "CommentID") Integer CommentID) {
+		commentService.deleteCmtByid(CommentID);
+	}
 
 }
