@@ -25,16 +25,24 @@ public class ArticleController {
 		return list;
 	}
 
-	// 获取个人博客
+	// 获有个人的所有博客列表,分页,每页显示pageSize条
 	@RequestMapping(value = "/sbArticleList", method = RequestMethod.GET)
-	public List<Article> sbArticleList(@RequestParam(value = "userid", required = false) Integer userid,
+	public List<Article> sbArticleList(
+			@RequestParam(value = "page") Integer page, @RequestParam(value = "pagesize") Integer pagesize,
 			HttpSession session) {
 		Integer id = (Integer) session.getAttribute("userid");
 		// System.out.println(id);
-		List<Article> list1 = articleService.sbArticleList(id);
+		List<Article> list1 = articleService.sbArticleList(id, page, pagesize);
 		return list1;
 	}
 
+	// 获取某个人博客列表的条数
+	@RequestMapping(value = "/sbArticleCount", method = RequestMethod.GET)
+	public int sbArticleCount(HttpSession session) {
+		Integer id = (Integer) session.getAttribute("userid");
+		return articleService.sbArticleCount(id);
+	}
+	
 	// 删除博客
 	@RequestMapping(value = "/sbArticle", method = RequestMethod.GET)
 	public int sbArticle(@RequestParam(value = "articleid", required = false) Integer articleid, HttpSession session) {

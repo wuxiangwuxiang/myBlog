@@ -19,10 +19,15 @@ public class ArticleService {
 		return list;
 	}
 
-	// 获取所有个人的博客
-	public List<Article> sbArticleList(Integer userID) {
-		List<Article> list1 = articleMapper.getSbArticleList(userID);
+	// 获有个人的所有博客列表,分页,每页显示pageSize条
+	public List<Article> sbArticleList(Integer userID, Integer page, Integer pageSize) {
+		List<Article> list1 = articleMapper.getSbArticleList(userID, page, pageSize);
 		return list1;
+	}
+
+	// 获取某个人博客列表的条数
+	public int sbArticleCount(Integer userID) {
+		return articleMapper.getSbArticleCount(userID);
 	}
 
 	// 删除博客
