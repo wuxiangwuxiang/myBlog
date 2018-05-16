@@ -18,9 +18,14 @@ public interface ArticleMapper {
 	@Select("select ArticleID ,ArticleName,ArticleContent ,UserID from Article")
 	public List<Article> getArticleList();
 
-	// 获取有个人的所有博客
-	@Select("select ArticleID ,ArticleName ,ArticleContent from Article where UserID = #{userID}")
-	public List<Article> getSbArticleList(@Param("userID") Integer UserID);
+	// 获有个人的所有博客列表,分页,每页显示pageSize条
+	@Select("select ArticleID ,ArticleName ,ArticleContent from Article where UserID = #{userID} order by ArticleID asc LIMIT #{page},#{pageSize}")
+	public List<Article> getSbArticleList(@Param("userID") Integer UserID, @Param("page") Integer page,
+			@Param("pageSize") Integer pageSize);
+
+	// 获取某个人博客列表的条数
+	@Select("select count(*) from Article where UserID =#{userID}")
+	public int getSbArticleCount(@Param("userID") Integer UserID);
 
 	// 删除博客
 	@Delete("delete from Article where ArticleID = #{articleID}")
@@ -34,11 +39,11 @@ public interface ArticleMapper {
 	@Insert("insert into Article (ArticleName,ArticleContent,UserID) values (#{ArticleName},#{ArticleContent},#{UserID})")
 	public int insertArticle(@Param("ArticleName") String ArticleName, @Param("ArticleContent") String ArticleContent,
 			@Param("UserID") Integer UserID);
-	
-	//添加文章后获取id
+
+	// 添加文章后获取id
 	@Select("select last_insert_id()")
 	public Integer getNewArticleID();
-	
+
 	// 更新博客
 	@Update("UPDATE Article SET ArticleName =#{articleName}, ArticleContent = #{articleContent} WHERE ArticleID = #{articleID}")
 	public int updateArticle(@Param("articleID") Integer ArticleID, @Param("articleName") String ArticleName,

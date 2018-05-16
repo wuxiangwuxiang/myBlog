@@ -17,34 +17,41 @@
 			<div id="logo" class="layui-logo">MyBlog</div>
 			<!-- 头部列表区域 -->
 			<ul class="layui-nav layui-layout-left layui-bg-cyan">
-				<li class="layui-nav-item"><a href="http://localhost:8080/html/homePage.html">所有博客</a></li>
+				<li class="layui-nav-item"><a
+					href="http://localhost:8080/html/homePage.html">所有博客</a></li>
 				<li class="layui-nav-item layui-this"><a
 					href="http://localhost:8080/html/myArticleListPage.html">个人博客</a></li>
-				<li class="layui-nav-item"><a href="http://localhost:8080/html/writeArticle.html">写博客</a></li>
+				<li class="layui-nav-item"><a
+					href="http://localhost:8080/html/writeArticle.html">写博客</a></li>
 				<li class="layui-nav-item"><a href="#">待开发</a></li>
 			</ul>
 			<ul class="layui-nav layui-layout-right layui-bg-cyan">
-				<li class="layui-nav-item">
-    				<a href="">个人中心<span class="layui-badge-dot"></span></a>
-  				</li>
-  				<li class="layui-nav-item" lay-unselect="">
-    				<a href="javascript:;"><img src="http://t.cn/RCzsdCq" class="layui-nav-img">我</a>
-   					<dl class="layui-nav-child">
-      					<dd><a id="changePersonalInfo" href="#">修改信息</a></dd>
-      					<!-- <dd><a href="javascript:;">安全管理</a></dd> -->
-      					<dd><a id="loginOutLink" href="#">退出登录</a></dd>
-    				</dl>  
-  				</li>
+				<li class="layui-nav-item"><a href="">个人中心<span
+						class="layui-badge-dot"></span></a></li>
+				<li class="layui-nav-item" lay-unselect=""><a
+					href="javascript:;"><img src="http://t.cn/RCzsdCq"
+						class="layui-nav-img">我</a>
+					<dl class="layui-nav-child">
+						<dd>
+							<a id="changePersonalInfo" href="#">修改信息</a>
+						</dd>
+						<!-- <dd><a href="javascript:;">安全管理</a></dd> -->
+						<dd>
+							<a id="loginOutLink" href="#">退出登录</a>
+						</dd>
+					</dl></li>
 			</ul>
 		</div>
 
 		<!-- 内容部 -->
-		<div id="contenter" class="layui-body " style="text-align: center; width: 1400px; overflow:auto; overflow-x:hidden; margin-left: 50px; background-image: ">
+		<div id="contenter" class="layui-body "
+			style="text-align: center; width: 1400px; overflow: auto; overflow-x: hidden; margin-left: 50px; background-image:">
 			<!-- 个人博客列表模块 -->
 			<div id="allArticleModel" style="margin: 100px auto;">
-				<table id="allArticleTable" class="allArticleTable layui-table" style="text-align: center; width: 1400px; height: 400px; "  lay-size="lg"
-					lay-even lay-skin="nob">
-					<thead  >
+				<table id="allArticleTable" class="allArticleTable layui-table"
+					style="text-align: center; width: 1400px; height: 400px;"
+					lay-size="lg" lay-even lay-skin="nob">
+					<thead>
 						<tr class="cen">
 							<th style="text-align: center; font-size: 18px">文章编号</th>
 							<th style="text-align: center; font-size: 18px">文章标题</th>
@@ -52,7 +59,7 @@
 						</tr>
 					</thead>
 					<tbody id="tbodydata">
-					    <tr>
+						<tr>
 							<td></td>
 							<td></td>
 							<td></td>
@@ -61,14 +68,14 @@
 
 				</table>
 				<hr>
-			<!-- 页面操作 -->
+				<!-- 页面操作 -->
 				<div>
 					<button id="lastArticlePage" class="layui-btn my-btn-primary">上一页</button>
 					<button id="tenPage" class="layui-btn my-btn-primary">换为每页10条</button>
 					<button id="fivePage" class="layui-btn my-btn-primary"
 						style="display: none;">换回每页5条</button>
 					<button id="nextArticlePage" class="layui-btn my-btn-primary">下一页</button>
-				</div> 
+				</div>
 			</div>
 		</div>
 
@@ -99,26 +106,23 @@
 		----*/
 		
 		/* 个人js区域 */
+		/* 分页用的变量 */
+		var page = 0;                 //第几条
+		var allArticleTotalCount = 0; //总博客的条数
+		var pageCount = 0;            //总博客的总页数
+		var nowPageCount = 1;         //总博客列表的当前页
+		var pageSize = 5;            //每页显示的数量
+		
 		$(document).ready(function() {
-			fiveArticle();
-			/* 主页显示个人博客列表 */
-/* 			$.ajax({
-				type : "GET",
-				url : "http://localhost:8080/sbArticleList",
-				success : function(data) {
-					$.each(data, function(i, item) {
-						//console.log("11111111");
-						$("#tbodydata").append("<tr><td>" + item.articleID + "</td><td><a onclick='articleHide(this)' href='#'>" + item.articleName + "</a></td><td>" + "<input name='deleteBoke' type='button' value='删除' onclick='getTableContent(this)' class='layui-btn my-btn-primary'>"+ "</td></tr>");
-					});
-				},
-			}); */
+			/* 调用获取前5页博客的方法 */
+			fiveArticle(page)
 			
 			/* 登录拦截跳转登录页面 */
 			$.ajax({
 				type:"GET",
 				url:"http://localhost:8080/intercept",
 				success:function(data){
-					console.log(data);
+					//console.log(data);
 					if(data == 0){
 						//console.log("YES");
 					}else{
@@ -130,93 +134,10 @@
 			
 		});  /* ready部分结束 */
 		
-		//点击按钮删除博客
-		function getTableContent(node){
-			var tr1 = node.parentNode.parentNode;
-			//alert(tr1.rowIndex);  
-            //alert(tr1.cells[0].innerText);
-            var articleid = tr1.cells[0].innerText;
-           // console.log(articleid);
-            //删除对应博客的评论
-            $.ajax({
-            	type:"GET",
-            	url:"http://localhost:8080/artComment",
-            	data:"articleid="+articleid,
-            	success:function(){
-            		console.log("删除对应评论成功");
-            	}
-            });
-            //删除博客
-            $.ajax({
-            	type:"GET",
-            	url:"http://localhost:8080/sbArticle",
-            	data:"articleid="+articleid,
-            	success : function() {
-					alert("删除成功");
-					location.href = "/html/myArticleListPage.html";
-				}
-            });
-		}
-		
-		var page = 0;                 //评论第几条
-		var allCommentTotalCount = 0; //总评论的条数
-		var pageCount = 0;            //总评论的总页数
-		var nowPageCount = 1;         //总评论列表的当前页
-		var pagesize = 5;            //每页显示评论的数量
-		var articleid = 0;
-		
-		//点击，显示文章详情与评论
-		function articleHide(node1){
-			var tr1 = node1.parentNode.parentNode;
-			//alert(tr1.rowIndex);  
-            //alert(tr1.cells[0].innerText);
-            articleid = tr1.cells[0].innerText;
-			//把articleid传到文章详情页
-			$.ajax({
-				type:"GET",
-            	url:"personalArticle.html",
-            	data:"articleid="+articleid,
-            	success:function(){
-            		location.href='personalArticle.html?articleid='+articleid;
-            	}
-			});
-		}
-
-		/* 退出登录 */
-		 $("#loginOutLink").click(function(){
-			$.ajax({
-				type:"GET",
-				url:"http://localhost:8080/loginOut",
-				success:function(){
-					location.href="/html/mainPage.html";
-				}
-			});
-		}); 
-		
-		/* 跳转修改信息页面 */
-		$("#changePersonalInfo").click(function(){
-			location.href = "/html/userInfo.html"
-		});
-		
-		/* 头部logo点击事件 */
-		$("#logo").click(function() {
-			location.href = "/html/homePage.html";
-		});
-//个人js区域
-		var page = 0;                 //第几条
-		var allArticleTotalCount = 0; //总博客的条数
-		var pageCount = 0;            //总博客的总页数
-		var nowPageCount = 1;         //总博客列表的当前页
-		var pageSize = 5;            //每页显示的数量
-		$(document).ready(function() {
-			//调用获取前5页的方法
-			fiveArticle(page);
-		});
-
-		//获取博客表页数
+		/* 获取博客表页数 */
 		$.ajax({
 			type : "GET",
-			url : "http://localhost:8080/artTotalCount",
+			url : "http://localhost:8080/sbArticleCount",
 			success : function(data) {
 				allArticleTotalCount = data; //获取博客条数
 				pageCount = (allArticleTotalCount + pageSize-1) / pageSize //计算页数
@@ -224,27 +145,23 @@
 				//console.log(pageCount);
 			}
 		});
-
-		//获取前5页博客的方法
+		
+		/* 获取个人前5页博客的方法 */
 		function fiveArticle(page) {
 			$.ajax({
 				type : "GET",
-				url : "http://localhost:8080/fiveAllArticleList",
+				url : "http://localhost:8080/sbArticleList",
 				data : "page=" + page + "&pagesize=" + pageSize,
 				success : function(data) {
 					$("#tbodydata").html("");
 					$.each(data, function(i, item) {
-						$("#tbodydata").append(
-								"<tr><td>" + item.articleID
-										+ "</td><td><a href='#' onclick='articleHide(this)'>"
-										+ item.articleName + "</a></td><td>"
-										+"<input name='deleteBoke' type='button' value='删除' onclick='getTableContent(this)' class='layui-btn my-btn-primary'>"+ "</td></tr>" 
-										/*  + item.userID + "</td></tr>"  */);
-					})
-				}
-			});
-		}
-
+						//console.log("11111111");
+						$("#tbodydata").append("<tr><td>" + item.articleID + "</td><td><a onclick='articleHide(this)' href='#'>" + item.articleName + "</a></td><td>" + "<input name='deleteBoke' type='button' value='删除' onclick='getTableContent(this)' class='layui-btn my-btn-primary'>"+ "</td></tr>");
+					});
+				},
+			}); 
+		};
+		
 		//点击翻下一页
 		$("#nextArticlePage").click(function() {
 			if (nowPageCount < parseInt(pageCount)) {
@@ -281,7 +198,7 @@
 			nowPageCount = 1
 			page = 0;
 			pageSize = 10;
-			pageCount = (allArticleTotalCount + 4) / pageSize; //重新计算页数
+			pageCount = (allArticleTotalCount + pageSize-1) / pageSize; //重新计算页数
 			fiveArticle(page);
 		});
 		
@@ -292,9 +209,78 @@
 			nowPageCount = 1
 			page = 0;
 			pageSize = 5;
-			pageCount = (allArticleTotalCount + 4) / pageSize; //重新计算页数
+			pageCount = (allArticleTotalCount + pageSize-1) / pageSize; //重新计算页数
 			fiveArticle(page);
+		});
+
+		//点击按钮删除博客
+		function getTableContent(node){
+			var tr1 = node.parentNode.parentNode;
+			//alert(tr1.rowIndex);  
+            //alert(tr1.cells[0].innerText);
+            var articleid = tr1.cells[0].innerText;
+           // console.log(articleid);
+            //删除对应博客的评论
+            $.ajax({
+            	type:"GET",
+            	url:"http://localhost:8080/artComment",
+            	data:"articleid="+articleid,
+            	success:function(){
+            		console.log("删除对应评论成功");
+            	}
+            });
+            //删除博客
+            $.ajax({
+            	type:"GET",
+            	url:"http://localhost:8080/sbArticle",
+            	data:"articleid="+articleid,
+            	success : function() {
+					alert("删除成功");
+					location.href = "/html/myArticleListPage.html";
+				}
+            });
+		}
+	
+		//点击，显示文章详情与评论
+		function articleHide(node1){
+			var tr1 = node1.parentNode.parentNode;
+			//alert(tr1.rowIndex);  
+            //alert(tr1.cells[0].innerText);
+            articleid = tr1.cells[0].innerText;
+			//把articleid传到文章详情页
+			$.ajax({
+				type:"GET",
+            	url:"personalArticle.html",
+            	data:"articleid="+articleid,
+            	success:function(){
+            		location.href='personalArticle.html?articleid='+articleid;
+            	}
+			});
+		}
+		
+		
+
+		/* 退出登录 */
+		 $("#loginOutLink").click(function(){
+			$.ajax({
+				type:"GET",
+				url:"http://localhost:8080/loginOut",
+				success:function(){
+					location.href="/html/mainPage.html";
+				}
+			});
 		}); 
+		
+		/* 跳转修改信息页面 */
+		$("#changePersonalInfo").click(function(){
+			location.href = "/html/userInfo.html"
+		});
+		
+		/* 头部logo点击事件 */
+		$("#logo").click(function() {
+			location.href = "/html/homePage.html";
+		});
+
 	</script>
 
 </body>
