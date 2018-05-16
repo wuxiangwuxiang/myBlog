@@ -39,20 +39,36 @@
 		</div>
 
 		<!-- 内容部 -->
-		<div id="contenter" class="layui-body layui-bg-gray" style="left: 0;">
+		<div id="contenter" class="layui-body " style="text-align: center; width: 1400px; overflow:auto; overflow-x:hidden; margin-left: 50px; background-image: ">
 			<!-- 个人博客列表模块 -->
-			<div id="allArticleModel">
-				<table id="allArticleTable" class="allArticleTable">
-					<thead>
+			<div id="allArticleModel" style="margin: 100px auto;">
+				<table id="allArticleTable" class="allArticleTable layui-table" style="text-align: center; width: 1400px; height: 400px; "  lay-size="lg"
+					lay-even lay-skin="nob">
+					<thead  >
 						<tr class="cen">
-							<th>文章编号</th>
-							<th>文章标题</th>
-							<th>操作</th>
+							<th style="text-align: center; font-size: 18px">文章编号</th>
+							<th style="text-align: center; font-size: 18px">文章标题</th>
+							<th style="text-align: center; font-size: 18px">操作</th>
 						</tr>
 					</thead>
 					<tbody id="tbodydata">
+					    <tr>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
 					</tbody>
+
 				</table>
+				<hr>
+			<!-- 页面操作 -->
+				<div>
+					<button id="lastArticlePage" class="layui-btn my-btn-primary">上一页</button>
+					<button id="tenPage" class="layui-btn my-btn-primary">换为每页10条</button>
+					<button id="fivePage" class="layui-btn my-btn-primary"
+						style="display: none;">换回每页5条</button>
+					<button id="nextArticlePage" class="layui-btn my-btn-primary">下一页</button>
+				</div> 
 			</div>
 		</div>
 
@@ -84,18 +100,18 @@
 		
 		/* 个人js区域 */
 		$(document).ready(function() {
-			
+			fiveArticle();
 			/* 主页显示个人博客列表 */
-			$.ajax({
+/* 			$.ajax({
 				type : "GET",
 				url : "http://localhost:8080/sbArticleList",
 				success : function(data) {
 					$.each(data, function(i, item) {
 						//console.log("11111111");
-						$("#tbodydata").append("<tr><td>" + item.articleID + "</td><td><a onclick='articleHide(this)' href='#'>" + item.articleName + "</a></td><td>" + "<input name='deleteBoke' type='button' value='删除' onclick='getTableContent(this)'>"+ "</td></tr>");
+						$("#tbodydata").append("<tr><td>" + item.articleID + "</td><td><a onclick='articleHide(this)' href='#'>" + item.articleName + "</a></td><td>" + "<input name='deleteBoke' type='button' value='删除' onclick='getTableContent(this)' class='layui-btn my-btn-primary'>"+ "</td></tr>");
 					});
 				},
-			});
+			}); */
 			
 			/* 登录拦截跳转登录页面 */
 			$.ajax({
@@ -186,7 +202,99 @@
 		$("#logo").click(function() {
 			location.href = "/html/homePage.html";
 		});
-	 		
+//个人js区域
+		var page = 0;                 //第几条
+		var allArticleTotalCount = 0; //总博客的条数
+		var pageCount = 0;            //总博客的总页数
+		var nowPageCount = 1;         //总博客列表的当前页
+		var pageSize = 5;            //每页显示的数量
+		$(document).ready(function() {
+			//调用获取前5页的方法
+			fiveArticle(page);
+		});
+
+		//获取博客表页数
+		$.ajax({
+			type : "GET",
+			url : "http://localhost:8080/artTotalCount",
+			success : function(data) {
+				allArticleTotalCount = data; //获取博客条数
+				pageCount = (allArticleTotalCount + pageSize-1) / pageSize //计算页数
+				//console.log(pageCount);
+				//console.log(pageCount);
+			}
+		});
+
+		//获取前5页博客的方法
+		function fiveArticle(page) {
+			$.ajax({
+				type : "GET",
+				url : "http://localhost:8080/fiveAllArticleList",
+				data : "page=" + page + "&pagesize=" + pageSize,
+				success : function(data) {
+					$("#tbodydata").html("");
+					$.each(data, function(i, item) {
+						$("#tbodydata").append(
+								"<tr><td>" + item.articleID
+										+ "</td><td><a href='#' onclick='articleHide(this)'>"
+										+ item.articleName + "</a></td><td>"
+										+"<input name='deleteBoke' type='button' value='删除' onclick='getTableContent(this)' class='layui-btn my-btn-primary'>"+ "</td></tr>" 
+										/*  + item.userID + "</td></tr>"  */);
+					})
+				}
+			});
+		}
+
+		//点击翻下一页
+		$("#nextArticlePage").click(function() {
+			if (nowPageCount < parseInt(pageCount)) {
+				nowPageCount++;
+				page = page + pageSize;
+			} else {
+				nowPageCount = 1;
+				page = 0;
+			}
+			//console.log(page);
+			//console.log(nowPageCount);
+			//console.log(pageSize);
+			fiveArticle(page);
+		});
+
+		//点击翻上一页
+		$("#lastArticlePage").click(function() {
+			if (nowPageCount > 1) {
+				nowPageCount--;
+				page = page - pageSize;
+			} else {
+				nowPageCount = parseInt(pageCount);
+				page = (nowPageCount - 1) * pageSize;
+			}
+			//console.log(page);
+			//console.log(nowPageCount);
+			fiveArticle(page);
+		});
+		
+		//点击变为每页显示10行
+		$("#tenPage").click(function(){
+			$("#fivePage").show();
+			$("#tenPage").hide();
+			nowPageCount = 1
+			page = 0;
+			pageSize = 10;
+			pageCount = (allArticleTotalCount + 4) / pageSize; //重新计算页数
+			fiveArticle(page);
+		});
+		
+		//点击换回每页5行
+		$("#fivePage").click(function(){
+			$("#fivePage").hide();
+			$("#tenPage").show();
+			nowPageCount = 1
+			page = 0;
+			pageSize = 5;
+			pageCount = (allArticleTotalCount + 4) / pageSize; //重新计算页数
+			fiveArticle(page);
+		}); 
 	</script>
 
 </body>
