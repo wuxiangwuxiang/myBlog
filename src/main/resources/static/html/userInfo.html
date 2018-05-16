@@ -43,7 +43,7 @@
 
 		<!-- 内容部 -->
 		<div id="contenter" class="layui-body layui-bg-gray" style="left: 0;background-image: url('../lib/wenli1.jpg');background-repeat: no-repeat;background-size: cover;">
-			<form class="layui-form" action="" target="nm_iframe"
+			<form id="personInfoForm" class="layui-form" action="" target="nm_iframe"
 				style="background-color: white;margin: 100px auto;width: 600px;height: 600px; border-radius: 16px;border:3px #888887 solid;box-shadow: 10px 10px 5px #888888; ">
 				
 				<div class="layui-form-item" style="margin-top: 25px;padding-top: 25px;">
@@ -135,16 +135,13 @@
 
 	<script>
 		/* layui的JavaScript代码区域 */
-		layui
-				.use(
-						[ 'laydate', 'form', 'layer', 'element' ],
-						function() {
-							var laydate = layui.laydate, form = layui.form, layer = layui.layer, element = layui.element;
-							//执行一个laydate实例
-							laydate.render({
-								elem : '#userBirthday' //指定元素
-							});
-						});
+		layui.use([ 'laydate', 'form', 'layer', 'element' ],function() {
+			var laydate = layui.laydate, form = layui.form, layer = layui.layer, element = layui.element;
+			//执行一个laydate实例
+			laydate.render({
+				elem : '#userBirthday' //指定元素
+			});
+		});
 
 		/*-------------------------------------------------------------------分界线-------------------------------------------------------------------------------------
 		 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -163,6 +160,7 @@
 				success : function(data) {
 					//console.log(data);
 					//console.log(data.userID);
+					document.getElementById("personInfoForm").reset();  //form恢复默认值(清理缓存,解决性别单选框刷新不变问题)
 					$("#userID").attr("value", data.userID)
 					$("#userName").attr("value", data.userName);
 					$("#userMobile").attr("value", data.userMobile);
@@ -186,36 +184,23 @@
 		};
 
 		/* 点击保存按钮,保存个人信息 */
-		$("#savePersonalInfo")
-				.click(
-						function() {
-							var userName = document.getElementById("userName").value; //获取相应输入框内的值
-							var userMobile = document
-									.getElementById("userMobile").value;
-							var userEmail = document
-									.getElementById("userEmail").value;
-							var userAddress = document
-									.getElementById("userAddress").value;
-							var userBirthday = document
-									.getElementById("userBirthday").value;
-							var userGender = $("input[name='sex']:checked")
-									.val(); //获取单选框选中为checked的值
-							console.log(userGender);
-							$.ajax({
-								type : "GET",
-								url : "http://localhost:8080/updateUserInfo",
-								data : "username=" + userName + "&usermobile="
-										+ userMobile + "&useremail="
-										+ userEmail + "&useraddress="
-										+ userAddress + "&usergender="
-										+ userGender + "&userbirthday="
-										+ userBirthday,
-								success : function() {
-									layer.msg('修改成功');
-								},
-							});
-
-						});
+		$("#savePersonalInfo").click(function() {
+			var userName = document.getElementById("userName").value; //获取相应输入框内的值
+			var userMobile = document.getElementById("userMobile").value;
+			var userEmail = document.getElementById("userEmail").value;
+			var userAddress = document.getElementById("userAddress").value;
+			var userBirthday = document.getElementById("userBirthday").value;
+			var userGender = $("input[name='sex']:checked").val(); //获取单选框选中为checked的值
+			//console.log(userGender);
+			$.ajax({
+				type : "GET",
+				url : "http://localhost:8080/updateUserInfo",
+				data : "username=" + userName + "&usermobile="+ userMobile + "&useremail="+ userEmail + "&useraddress="+ userAddress + "&usergender="+ userGender + "&userbirthday="+ userBirthday,
+				success : function() {
+					layer.msg('修改成功');
+				},
+			});
+		});
 
 		/* 返回主页homePage按钮 */
 		$("#backHomePage").click(function() {

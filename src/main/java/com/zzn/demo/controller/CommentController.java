@@ -49,11 +49,11 @@ public class CommentController {
 	/* 写评论，添加评论 */
 	@RequestMapping(value = "/insertComment", method = RequestMethod.GET)
 	public int insertComment(@RequestParam(value = "commentcontent") String commentcontent,
-			@RequestParam(value = "userid") Integer userid, @RequestParam(value = "articleid") Integer articleid, HttpSession session) {
-		System.out.println(session.getAttribute("userid"));
-		Integer uid = (Integer) session.getAttribute("userid");
-		System.out.println(session.getAttribute("userid"));
-		return commentService.insertComt(commentcontent, uid, articleid);
+			 @RequestParam(value = "articleid") Integer articleid,
+			HttpSession session) {
+		Integer userid = (Integer) session.getAttribute("userid");
+		//System.out.println(userid+commentcontent+articleid);
+		return commentService.insertComt(commentcontent, userid, articleid);
 	}
 
 }
