@@ -17,7 +17,9 @@ public class RegisterController {
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public int insert(@RequestParam(value = "userpwd", required = false) String userpwd,
 			@RequestParam(value = "username", required = false) String username) {
-		return userService.insert(userpwd, username);
+		userService.insert(userpwd, username);
+		//System.out.println(userService.getUserid());
+		return userService.getUserid();
 	}
 
 }

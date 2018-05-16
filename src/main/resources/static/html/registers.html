@@ -107,8 +107,8 @@
 
 	<script>
 		//layui的JavaScript代码区域
-		layui.use([ 'element', 'form' ], function() {
-			var element = layui.element, form = layui.form;
+		layui.use([ 'element', 'form' ,'layer'], function() {
+			var element = layui.element, form = layui.form,layer = layui.layer;
 		});
 
 		/*-------------------------------------------------------------------分界线-------------------------------------------------------------------------------------
@@ -126,9 +126,22 @@
 					type : "GET",
 					url : "http://localhost:8080/register",
 					data : "userpwd=" + userpwd + "&username=" + username,
-					success : function() {
-						alert("注册成功,请登录！");
-						location.href = 'logins.html'
+					success : function(data) {
+						var userid = data
+						layer.confirm('注册成功！您的账号为'+userid+"！请记好！", {
+							btn : [ '返回注册', '立即登录' ]
+						}, function() {
+							location.href = 'registers.html';
+						}, function() {
+							$.ajax({
+								type : "GET",
+								url : "http://localhost:8080/login",
+								data : "userid=" + userid + "&userpwd=" + userpwd,
+								success : function() {		
+									location.href = '/html/userInfo.html';
+								}
+							});
+						});
 					}
 				})
 			}

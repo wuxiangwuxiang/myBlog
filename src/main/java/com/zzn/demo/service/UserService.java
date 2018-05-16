@@ -18,6 +18,7 @@ public class UserService {
 	}
 
 	public int insert(String userPWD, String userName) {
+		userMapper.getUserID();
 		return userMapper.insertUser(userPWD, userName);
 	}
 
@@ -35,5 +36,10 @@ public class UserService {
 			String userAddress, String userEmail, Date userBirthday) {
 		userMapper.updateUserInformation(userName, userMobile, userGender, userAddress, userEmail, userBirthday,
 				userid);
+	}
+	
+	/* 获取新注册的用户ID */
+	public int getUserid() {
+		return userMapper.getUserID();
 	}
 }

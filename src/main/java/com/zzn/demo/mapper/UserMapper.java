@@ -36,4 +36,7 @@ public interface UserMapper {
 			@Param("userEmail") String userEmail, @Param("userBirthday") Date userBirthday,
 			@Param("userID") Integer UserID);
 
+	/* 获取新注册的用户ID */
+	@Select("select last_insert_id()")
+	public Integer getUserID();
 }
