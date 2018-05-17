@@ -36,7 +36,7 @@
 			<div class="registers-div">
 				<!-- 登录表单 -->
 
-				<form id="loginForm" class="layui-form" action="/html/homePage.html">
+				<form id="loginForm" class="layui-form" action="" target="nm_iframe">
 					<h1 style="">账号登录</h1>
 					<br> <br>
 					<!-- 账号框 -->
@@ -97,6 +97,9 @@
 					</div>
 
 				</form>
+				
+				<!-- 处理form表单的跳转 -->
+				<iframe id="id_iframe" name="nm_iframe" style="display: none;"></iframe>
 			</div>
 		</div>
 
@@ -137,7 +140,7 @@
 					url : "http://localhost:8080/login",
 					data : "userid=" + userid + "&userpwd=" + userpwd,
 					success : function(data) {
-						console.log(data);
+						//console.log(data);
 						if ("empty" == data) {
 						} else if ("error" == data) {
 							alert("账号或密码错误");
