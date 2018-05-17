@@ -3,9 +3,74 @@
 <head>
 <meta charset="UTF-8">
 <title>忘记密码</title>
+<script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../layui/layui.js"></script>
+<link type="text/css" rel="stylesheet" href="../layui/css/layui.css">
+<link type="text/css" rel="stylesheet" href="../css/myBlog.css">
 </head>
 <body>
-	<h1>忘记密码怎么办</h1>
-	<p>忘记密码怎么办</p>
+	<div class="layui-layout layui-layout-admin">
+		<!-- 头部 -->
+		<div class="layui-header layui-bg-cyan">
+			<div id="logo" class="layui-logo">MyBlog</div>
+			<!-- 头部区域（可配合layui已有的水平导航） -->
+			<ul class="layui-nav layui-layout-left">
+				<li class="layui-nav-item"><a
+					href="http://localhost:8080/html/mainPage.html">博客</a></li>
+				<li class="layui-nav-item"><a href="http://localhost:8080/html/logins.html">写博客</a></li>
+				<li class="layui-nav-item"><a href="#">待开发</a></li>
+				<li class="layui-nav-item"><a href="#">待开发</a></li>
+			</ul>
+			<ul class="layui-nav layui-layout-right">
+				<li class="layui-nav-item"><a id="signBtn" href="#">登录</a></li>
+			</ul>
+		</div>
+         <!-- 密码找回内容部分 -->
+       <div style="margin: 100px auto; width: 500px;height: 300px;">
+              <h1>密码找回</h1>
+                  <hr class="layui-bg-black">
+						<div class="layui-form-item" style="">
+
+						<label class="layui-form-label" for="userid"><i
+							class="layui-icon" style="font-size: 22px;">&#xe66f;</i>账号:</label>
+
+						<div class="layui-input-block">
+							<input id="userid" type="text" name="userid" required
+								lay-verify="required" placeholder="请输入您的账号" autocomplete="off"
+								class="layui-input" style="width: 270px;">
+						</div>
+						
+				 <div class="layui-form-item" style="">
+
+						<label class="layui-form-label" for="userid">验证码</label>
+
+						<div class="layui-input-block">
+							<input id="userid" type="text" name="userid" required
+								lay-verify="required" autocomplete="off"
+								class="layui-input" style="width: 100px;float: left;">
+							<a href="#" style="margin-top: 10px;float: left; margin-left: 70px;">点击更换验证码</a>
+						</div>
+							
+						
+					</div>
+						<button id="saveArticle" class="layui-btn my-btn-primary"
+								lay-submit lay-filter="formDemo" style="margin-left: 110px; width: 270px;">提交</button>
+					</div>
+					<hr class="layui-bg-black">
+					<!-- 底部 -->
+		<div class="layui-footer" style="left: 0; background-color: #2F4056">
+			<!-- 底部固定区域 -->
+			<div style="margin-left: 20%">
+				<label> <a href="#"
+					style="color: #e2e2e2; margin-left: 370px;">© 2018 myBlog.com</a>
+					&nbsp; <a href="#" style="color: #e2e2e2">微信公众号</a> &nbsp; <a
+					href="#" style="color: #e2e2e2">案例</a> &nbsp; <a href="#"
+					style="color: #e2e2e2">支持</a> &nbsp; <a href="#"
+					style="color: #e2e2e2">联系</a> &nbsp; <a href="https://github.com/"
+					target="_blank" style="color: #e2e2e2">GitHub</a>
+				</label>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
