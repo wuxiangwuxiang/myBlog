@@ -244,6 +244,21 @@
 					$("#writeCommentArea").val('');	
 					$("#writeCommentArea").css("height","35px");
 					$("#subCommentDIV").hide();
+					fiveComment(page);
+					//重新计算评论页数
+					$.ajax({
+						type : "GET",
+						url : "http://localhost:8080/commentTotalCount",
+						data: "articleid=" + articleid,
+						success : function(data) {
+							allCommentTotalCount = data; //获取博客条数
+							pageCount = (allCommentTotalCount + 4) / pagesize //计算页数
+							//console.log(articleid);
+							//console.log(allCommentTotalCount);
+							//console.log(pageCount);
+						}
+					});
+					
 				},
 			});
 		});
